@@ -82,11 +82,16 @@ pub fn load(root: &Path, out_static: &Path, handle: &str, limit: usize) -> Resul
         let img_dir = out_static.join("img").join("instagram");
         match fetch(token.trim(), user_id.trim(), handle, limit, &img_dir) {
             Ok(posts) => {
-                println!("Instagram: {} posts from the API", posts.len());
+                report("notice", &format!("{} posts from the API", posts.len()));
                 return Ok(posts);
             }
-            Err(e) => eprintln!("warning: Instagram API failed, using content/instagram.toml ({e})"),
+            Err(e) => report(
+                "warning",
+                &format!("API failed, using content/instagram.toml ({e})"),
+            ),
         }
+    } else if std::env::var("GITHUB_ACTIONS").is_ok() {
+        report("notice", "no INSTAGRAM_TOKEN secret, using content/instagram.toml");
     }
     if let Ok(path) = std::env::var("INSTAGRAM_FIXTURE") {
         let json = fs::read_to_string(&path).map_err(|e| format!("{path}: {e}"))?;
@@ -111,6 +116,20 @@ pub fn load(root: &Path, out_static: &Path, handle: &str, limit: usize) -> Resul
             kind: "image".into(),
         })
         .collect())
+}
+
+/// Prints the Instagram result. On GitHub Actions it also becomes an
+/// annotation, visible on the run's page without opening the log.
+fn report(level: &str, message: &str) {
+    if std::env::var("GITHUB_ACTIONS").is_ok() {
+        // Annotations are one line; % and newlines must be escaped.
+        let msg = message.replace('%', "%25").replace('\r', "%0D").replace('\n', "%0A");
+        println!("::{level} title=Instagram::{msg}");
+    } else if level == "notice" {
+        println!("Instagram: {message}");
+    } else {
+        eprintln!("{level}: Instagram {message}");
+    }
 }
 
 fn parse(json: &str) -> Result<Vec<Media>, String> {
