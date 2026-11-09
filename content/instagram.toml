@@ -1,0 +1,10 @@
+# Instagram posts shown on the home page, in this order.
+# To add one: open the post on instagram.com, copy its link, and add:
+#
+# [[posts]]
+# url = "https://www.instagram.com/p/XXXXXXXXXXX/"
+# caption = "Palabra del día: tlasojkamati"   # shown while the post loads
+#
+# While the list is empty, the home page shows a link to @matidemati instead.
+
+posts = []

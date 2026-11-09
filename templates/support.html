@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "partials/macros.html" as m %}
+{% block main %}
+{{ m.page_hero(t.support.tag, t.support.title, t.support.lead, 'p05') }}
+
+<section class="section">
+  <div class="wrap">
+    <div class="donate-card">
+      <div>
+        <h2>{{ t.support.donate_title }}</h2>
+        <p>{{ t.support.donate_text }}</p>
+      </div>
+      <a class="button button--kofi button--big" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-cols">
+    <div class="card">
+      <h2>{{ t.support.uses_title }}</h2>
+      <ul class="check-list">
+        <li>{{ t.support.use_1 }}</li>
+        <li>{{ t.support.use_2 }}</li>
+        <li>{{ t.support.use_3 }}</li>
+      </ul>
+    </div>
+    <div class="card" data-serie="milpa">
+      <h2>{{ t.support.other_title }}</h2>
+      <ul class="check-list">
+        <li>{{ t.support.other_1 }}</li>
+        <li><a href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.support.other_2 }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
+        <li><a href="{{ links.contact }}">{{ t.support.other_3 }}</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

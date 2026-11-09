@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% import "partials/macros.html" as m %}
+{% block main %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="pattern-strip pattern-p01" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <span class="tag">{{ t.home.tag }}</span>
+      <h1 id="hero-title">{{ t.home.title }}</h1>
+      <p>{{ t.home.lead }}</p>
+      <p class="hero-actions">
+        <a class="button button--light" href="{{ links.magazine }}">{{ t.home.cta_primary }} →</a>
+        <a class="button button--outline-light" href="{{ links.tools }}">{{ t.home.cta_secondary }}</a>
+      </p>
+    </div>
+    <img class="hero-logo" src="{{ base }}static/img/mati-logo-textil.png" width="300" height="300" alt="{{ t.common.logo_alt }}">
+  </div>
+</section>
+
+<section class="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="intro-card">
+      <div>
+        <h2 id="intro-title">{{ t.home.intro_title }}</h2>
+        <p>{{ t.home.intro_1 }}</p>
+        <p>{{ t.home.intro_2 }}</p>
+      </div>
+      <ul class="pillars">
+        <li><a href="{{ links.magazine }}"><strong>{{ t.home.pillar_1_title }}</strong>{{ t.home.pillar_1 }}</a></li>
+        <li><a href="{{ links.tools }}"><strong>{{ t.home.pillar_2_title }}</strong>{{ t.home.pillar_2 }}</a></li>
+        <li><a href="{{ links.support }}"><strong>{{ t.home.pillar_3_title }}</strong>{{ t.home.pillar_3 }}</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="latest-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="latest-title">{{ t.home.latest_title }}</h2>
+      {%- if articles %}<a class="link-more" href="{{ links.magazine }}">{{ t.common.all_articles }} →</a>{% endif %}
+    </div>
+    {%- if articles %}
+    <div class="article-grid">
+      {%- for a in articles %}{{ m.article_card(a, t) }}{% endfor %}
+    </div>
+    {%- else %}
+    <p class="empty">{{ t.magazine.empty }}</p>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="tools-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2 id="tools-title">{{ t.home.tools_title }}</h2>
+        <p class="caption">{{ t.home.tools_lead }}</p>
+      </div>
+    </div>
+    <div class="tool-grid">
+      {%- for tool in tools %}{{ m.tool_card(tool, t) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section instagram" aria-labelledby="ig-title" data-serie="jacaranda">
+  <div class="wrap">
+    <div class="instagram-card">
+      <div class="section-head">
+        <div>
+          <h2 id="ig-title">{{ t.instagram.title }}</h2>
+          <p>{{ t.instagram.lead }}</p>
+        </div>
+        <a class="button" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.instagram.follow | replace("{handle}", site.instagram) }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+      </div>
+      {%- if instagram.posts %}
+      <div class="instagram-grid" data-instagram>
+        {%- for post in instagram.posts %}
+        <blockquote class="instagram-media" data-instgrm-permalink="{{ post.url }}" data-instgrm-version="14">
+          <a href="{{ post.url }}" target="_blank" rel="noopener">{{ post.caption or ("@" ~ site.instagram) }}</a>
+        </blockquote>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="caption">{{ t.instagram.empty }}</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>
+
+{{ m.support_cta(t, site, links) }}
+{% endblock %}

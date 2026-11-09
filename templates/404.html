@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="page-hero page-hero--404">
+  <div class="pattern-strip pattern-p01" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="tag">404</span>
+    <h1>{{ t.notfound.title }}</h1>
+    <p class="lead">{{ t.notfound.text }}</p>
+    <p class="hero-actions">
+      <a class="button" href="{{ home }}">{{ t.notfound.home }}</a>
+      <a class="button button--ghost" href="{{ base }}en/" lang="en">Go to the English site</a>
+      <a class="button button--ghost" href="{{ base }}zh/" lang="zh-Hans">前往中文网站</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

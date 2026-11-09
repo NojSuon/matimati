@@ -1,0 +1,162 @@
+# Site texts in English. Same keys as es.toml.
+
+html_lang = "en"
+hreflang = "en"
+og_locale = "en_US"
+label = "EN"
+switch_name = "Read this page in English"
+months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+date_format = "{month} {d}, {y}"
+reading_rate = 220
+
+[routes]
+magazine = "magazine"
+tools = "tools"
+about = "about"
+support = "support"
+contact = "contact"
+
+[nav]
+label = "Main menu"
+home = "Home"
+magazine = "Magazine"
+tools = "Tools"
+about = "About"
+contact = "Contact"
+languages = "Site language"
+
+[common]
+skip = "Skip to content"
+donate = "Donate"
+donate_hidden = "(on Ko-fi, opens in a new tab)"
+new_tab = "(opens in a new tab)"
+read = "Read"
+minutes = "min read"
+all_articles = "See all articles"
+logo_alt = "Mati Mati logo: the letters MA and TI over four textile patterns."
+
+[home]
+description = "Mati Mati is a community to learn, preserve and share Indigenous languages. Read our magazine, use our tools and join us."
+tag = "Indigenous languages community"
+title = "Every language is a way of seeing the world"
+lead = "We read, learn and share Indigenous languages of Mexico, together. Here you'll find our magazine, our tools and ways to join in."
+cta_primary = "Read the magazine"
+cta_secondary = "Explore the tools"
+intro_title = "What is Mati Mati?"
+intro_1 = "Mati Mati is a community and web platform to teach, preserve and share Indigenous and minority languages. Today we work with languages of Mexico, and we want to keep adding regions and communities."
+intro_2 = "Learning a language means stepping into a different way of seeing the world, and doing it together."
+pillar_1_title = "Read"
+pillar_1 = "Articles about languages, words, stories and ideas."
+pillar_2_title = "Practice"
+pillar_2 = "Free learning tools, like the verb conjugator."
+pillar_3_title = "Join in"
+pillar_3 = "Share, tell us about your language or support the project."
+latest_title = "Latest in the magazine"
+tools_title = "Tools"
+tools_lead = "Practice at your own pace, free and with no account."
+
+[instagram]
+title = "Follow us on Instagram"
+lead = "Words of the day, facts and carousels to learn a little every week."
+follow = "See @{handle} on Instagram"
+empty = "Our posts will show up here soon. Meanwhile, visit us on Instagram."
+
+[magazine]
+title = "Magazine"
+description = "Mati Mati articles about Indigenous languages: words, stories, ideas and tools."
+tag = "Mati Mati Magazine"
+lead = "Words, stories and ideas to get to know Indigenous languages better. Written by the Mati Mati team."
+filter = "Filter by topic"
+filter_all = "All"
+count_one = "1 article"
+count_many = "{n} articles"
+empty = "Our first article is coming very soon."
+rss = "Subscribe via RSS"
+newsletter_soon = "Soon you'll be able to get every article in your inbox."
+
+[article]
+default_author = "The Mati Mati team"
+by = "By"
+back = "Back to the magazine"
+share = "Share"
+copied = "Link copied"
+also_in = "Also in"
+more = "Keep reading"
+tags = "Topics"
+support_title = "Did you enjoy this article?"
+support_text = "Mati Mati is an independent project. Your support keeps us writing and building free tools."
+
+[tools]
+title = "Tools"
+description = "Free Mati Mati tools to learn Indigenous languages."
+tag = "Mati Mati tools"
+lead = "Free tools to learn and practice Indigenous languages. They all run in your browser, no account needed."
+open = "Open"
+soon_title = "What tool would you like?"
+soon_text = "We're working on more. Tell us what would help you learn."
+
+[about]
+title = "About"
+description = "Who we are, what we do and why: Mati Mati's mission and vision."
+tag = "About Mati Mati"
+lead = "We're a community that believes every language holds a unique way of naming the world."
+mission_title = "Mission"
+mission = "To build a community and a web platform where learning, preserving and sharing Indigenous and minority languages is accessible, appealing and respectful."
+vision_title = "Vision"
+vision = "To be a go-to space that grows from Mexico to other regions, adding more and more languages and communities."
+promise_title = "Our promise"
+promise = "Learning a language means stepping into a different way of seeing the world, and doing it together."
+values_title = "How we work"
+value_1_title = "With respect"
+value_1 = "We talk about languages, not “dialects”, and name each one with its variety."
+value_2_title = "With sources"
+value_2 = "We credit who teaches and check words with speakers."
+value_3_title = "As a community"
+value_3 = "We ask, we listen and we credit every contribution."
+value_4_title = "For everyone"
+value_4 = "Clear writing, free tools and accessible design."
+
+[support]
+title = "Support us"
+description = "Support Mati Mati with a donation on Ko-fi or by sharing our work."
+tag = "Support Mati Mati"
+lead = "Mati Mati is an independent project. Your support helps us write, build free tools and add more languages."
+donate_title = "Make a donation"
+donate_text = "You can give once or monthly on Ko-fi. Every amount counts."
+donate_button = "Donate on Ko-fi"
+uses_title = "Where your support goes"
+use_1 = "Researching and writing articles for the magazine."
+use_2 = "Building and maintaining free tools like the conjugator."
+use_3 = "Working with speakers and crediting those who teach."
+other_title = "Other ways to help"
+other_1 = "Share an article with someone who might find it useful."
+other_2 = "Follow us on Instagram and comment on our posts."
+other_3 = "Tell us about your language or your community."
+
+[contact]
+title = "Contact"
+description = "Write to us: questions, proposals, corrections or ideas for Mati Mati."
+tag = "Contact"
+lead = "Have a question, a proposal or a correction? We'd love to hear from you."
+email_title = "Send us an email"
+email_text = "We reply within a few days."
+email_subject = "Hello, Mati Mati"
+instagram_title = "Send us a message"
+instagram_text = "We also reply to direct messages on Instagram."
+topics_title = "You can write to us to"
+topic_1 = "Suggest a language, a word or a topic."
+topic_2 = "Correct a fact or a word."
+topic_3 = "Collaborate as a speaker, teacher or institution."
+
+[footer]
+about = "A community to learn, preserve and share Indigenous languages."
+rss = "RSS"
+rights = "Mati Mati"
+
+[notfound]
+title = "We couldn't find this page"
+text = "It may have moved or no longer exists."
+home = "Go to the home page"
+
+[ads]
+label = "Advertisement"

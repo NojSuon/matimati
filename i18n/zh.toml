@@ -1,0 +1,164 @@
+# 网站中文文本（简体）。与 es.toml 的键相同。
+# Chinese translation: please have a native speaker review it before launch.
+
+html_lang = "zh-Hans"
+hreflang = "zh-Hans"
+og_locale = "zh_CN"
+label = "中文"
+switch_name = "用中文阅读此页"
+months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+date_format = "{y}年{m}月{d}日"
+reading_rate = 400
+
+# Same addresses as English: /zh/magazine/, /zh/tools/…
+[routes]
+magazine = "magazine"
+tools = "tools"
+about = "about"
+support = "support"
+contact = "contact"
+
+[nav]
+label = "主菜单"
+home = "首页"
+magazine = "杂志"
+tools = "工具"
+about = "关于我们"
+contact = "联系我们"
+languages = "网站语言"
+
+[common]
+skip = "跳到正文"
+donate = "捐助我们"
+donate_hidden = "（在 Ko-fi 上，在新标签页打开）"
+new_tab = "（在新标签页打开）"
+read = "阅读"
+minutes = "分钟阅读"
+all_articles = "查看全部文章"
+logo_alt = "Mati Mati 标志：四种织物图案上的字母 MA 和 TI。"
+
+[home]
+description = "Mati Mati 是一个学习、保护和传播原住民语言的社区。阅读我们的杂志，使用我们的工具，加入我们。"
+tag = "原住民语言社区"
+title = "每一种语言都是看世界的一种方式"
+lead = "我们一起阅读、学习和分享墨西哥的原住民语言。在这里，你可以找到我们的杂志、工具，以及参与的方式。"
+cta_primary = "阅读杂志"
+cta_secondary = "了解工具"
+intro_title = "Mati Mati 是什么？"
+intro_1 = "Mati Mati 是一个教授、保护和传播原住民语言及少数民族语言的社区和网络平台。目前我们关注墨西哥的语言，并希望不断加入更多地区和社区。"
+intro_2 = "学习一种语言，就是走进另一种看世界的方式，而且是和大家一起。"
+pillar_1_title = "阅读"
+pillar_1 = "关于语言、词汇、故事和概念的文章。"
+pillar_2_title = "练习"
+pillar_2 = "免费的学习工具，比如动词变位工具。"
+pillar_3_title = "参与"
+pillar_3 = "分享内容，告诉我们你的语言，或支持这个项目。"
+latest_title = "杂志最新文章"
+tools_title = "工具"
+tools_lead = "按自己的节奏练习，免费，无需注册。"
+
+[instagram]
+title = "在 Instagram 上关注我们"
+lead = "每日一词、小知识和图文帖子，每周学一点。"
+follow = "在 Instagram 上查看 @{handle}"
+empty = "我们的帖子很快会出现在这里。现在可以先去 Instagram 看看。"
+
+[magazine]
+title = "杂志"
+description = "Mati Mati 关于原住民语言的文章：词汇、故事、概念和工具。"
+tag = "Mati Mati 杂志"
+lead = "通过词汇、故事和概念，更好地了解原住民语言。由 Mati Mati 团队撰写。"
+filter = "按主题筛选"
+filter_all = "全部"
+count_one = "1 篇文章"
+count_many = "{n} 篇文章"
+empty = "第一篇文章即将发布。"
+rss = "通过 RSS 订阅"
+newsletter_soon = "很快你就可以通过电子邮件收到每篇文章。"
+
+[article]
+default_author = "Mati Mati 团队"
+by = "作者："
+back = "返回杂志"
+share = "分享"
+copied = "链接已复制"
+also_in = "其他语言版本"
+more = "继续阅读"
+tags = "主题"
+support_title = "喜欢这篇文章吗？"
+support_text = "Mati Mati 是一个独立项目。有了你的支持，我们才能继续写作并制作免费工具。"
+
+[tools]
+title = "工具"
+description = "Mati Mati 用于学习原住民语言的免费工具。"
+tag = "Mati Mati 工具"
+lead = "学习和练习原住民语言的免费工具。全部在浏览器中运行，无需注册。"
+open = "打开"
+soon_title = "你想要什么工具？"
+soon_text = "我们正在准备更多工具。告诉我们什么能帮助你学习。"
+
+[about]
+title = "关于我们"
+description = "我们是谁、做什么、为什么做：Mati Mati 的使命和愿景。"
+tag = "关于 Mati Mati"
+lead = "我们是一个社区，相信每一种语言都蕴含着一种独特的命名世界的方式。"
+mission_title = "使命"
+mission = "建立一个社区和网络平台，让学习、保护和传播原住民语言及少数民族语言变得容易、有趣并充满尊重。"
+vision_title = "愿景"
+vision = "成为一个值得信赖的空间，从墨西哥走向其他地区，汇聚越来越多的语言和社区。"
+promise_title = "我们的承诺"
+promise = "学习一种语言，就是走进另一种看世界的方式，而且是和大家一起。"
+values_title = "我们的工作方式"
+value_1_title = "尊重"
+value_1 = "我们称之为“语言”而不是“方言”，并写明每种语言及其变体的名称。"
+value_2_title = "有据可查"
+value_2 = "我们注明教授者，并与母语者核对词汇。"
+value_3_title = "社区共建"
+value_3 = "我们提问、倾听，并为每一份贡献署名。"
+value_4_title = "面向所有人"
+value_4 = "清晰的文字、免费的工具和无障碍的设计。"
+
+[support]
+title = "支持我们"
+description = "在 Ko-fi 上捐助 Mati Mati，或分享我们的内容来支持我们。"
+tag = "支持 Mati Mati"
+lead = "Mati Mati 是一个独立项目。你的支持帮助我们写作、制作免费工具，并加入更多语言。"
+donate_title = "捐助"
+donate_text = "你可以在 Ko-fi 上一次性捐助或每月捐助。多少都有意义。"
+donate_button = "在 Ko-fi 上捐助"
+uses_title = "你的支持用于"
+use_1 = "为杂志调研和撰写文章。"
+use_2 = "制作和维护免费工具，比如动词变位工具。"
+use_3 = "与母语者合作，并为教授者署名。"
+other_title = "其他支持方式"
+other_1 = "把文章分享给可能用得上的人。"
+other_2 = "在 Instagram 上关注我们并留言。"
+other_3 = "告诉我们你的语言或你的社区。"
+
+[contact]
+title = "联系我们"
+description = "给我们写信：问题、建议、更正或关于 Mati Mati 的想法。"
+tag = "联系我们"
+lead = "有问题、建议或需要更正的地方？我们很乐意听到你的声音。"
+email_title = "给我们发邮件"
+email_text = "我们会在几天内回复。"
+email_subject = "你好，Mati Mati"
+instagram_title = "给我们发私信"
+instagram_text = "我们也会回复 Instagram 上的私信。"
+topics_title = "你可以写信给我们，来"
+topic_1 = "推荐一种语言、一个词或一个主题。"
+topic_2 = "更正某个信息或词汇。"
+topic_3 = "以母语者、教师或机构的身份合作。"
+
+[footer]
+about = "学习、保护和传播原住民语言的社区。"
+rss = "RSS"
+rights = "Mati Mati"
+
+[notfound]
+title = "找不到这个页面"
+text = "它可能已经移动或不存在了。"
+home = "返回首页"
+
+[ads]
+label = "广告"

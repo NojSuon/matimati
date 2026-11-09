@@ -1,0 +1,84 @@
+{#- Pieces used on several pages. -#}
+
+{% macro article_card(a, t) -%}
+<article class="article-card" data-serie="{{ a.serie }}" data-tags="{{ a.tags | join('|') }}">
+  {%- if a.image %}
+  <img class="article-card__image" src="{{ a.image }}" alt="{{ a.image_alt }}" loading="lazy">
+  {%- else %}
+  <div class="pattern-{{ a.pattern }} article-card__strip" aria-hidden="true"></div>
+  {%- endif %}
+  <div class="article-card__body">
+    {%- if a.tags %}
+    <ul class="tag-list" aria-label="{{ t.article.tags }}">
+      {%- for tag in a.tags %}<li class="tag tag--suave">{{ tag }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+    <h3><a href="{{ a.href }}">{{ a.title }}</a></h3>
+    <p>{{ a.description }}</p>
+    <p class="meta"><time datetime="{{ a.date }}">{{ a.date_human }}</time> · {{ a.reading_minutes }} {{ t.common.minutes }}</p>
+  </div>
+</article>
+{%- endmacro %}
+
+{% macro tool_card(tool, t) -%}
+<article class="tool-card" data-serie="{{ tool.serie }}">
+  {%- if tool.tag %}<span class="tag">{{ tool.tag }}</span>{% endif %}
+  <h3><a href="{{ tool.url }}">{{ tool.name }}</a></h3>
+  <p>{{ tool.description }}</p>
+  <span class="tool-card__go" aria-hidden="true">{{ t.tools.open }} →</span>
+</article>
+{%- endmacro %}
+
+{% macro page_hero(tag, title, lead, pattern='p01') -%}
+<section class="page-hero">
+  <div class="pattern-strip pattern-{{ pattern }}" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="tag">{{ tag }}</span>
+    <h1>{{ title }}</h1>
+    {%- if lead %}<p class="lead">{{ lead }}</p>{% endif %}
+  </div>
+</section>
+{%- endmacro %}
+
+{% macro support_cta(t, site, links, title=none, text=none) -%}
+<section class="cta" aria-labelledby="cta-support">
+  <div class="wrap">
+    <div class="cta-card">
+      <div>
+        <h2 id="cta-support">{{ title or t.support.donate_title }}</h2>
+        <p>{{ text or t.support.lead }}</p>
+      </div>
+      <div class="cta-actions">
+        <a class="button button--kofi" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+        <a class="button button--ghost" href="{{ links.support }}">{{ t.support.other_title }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endmacro %}
+
+{% macro ad_slot(site, t) -%}
+{#- Renders nothing until ads are enabled in site.toml. -#}
+{%- if site.ads.enabled and site.ads.client and site.ads.slot %}
+<aside class="ad-slot wrap" aria-label="{{ t.ads.label }}">
+  <span class="ad-slot__label">{{ t.ads.label }}</span>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="{{ site.ads.client }}" data-ad-slot="{{ site.ads.slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</aside>
+{%- endif %}
+{%- endmacro %}
+
+{% macro newsletter(site, t, feed) -%}
+{#- Email sign-up once a service is set in site.toml; until then, RSS. -#}
+<div class="newsletter">
+  {%- if site.newsletter.enabled and site.newsletter.action %}
+  <form class="newsletter-form" action="{{ site.newsletter.action }}" method="post" target="_blank">
+    <label for="newsletter-email">{{ t.magazine.newsletter_soon }}</label>
+    <div><input id="newsletter-email" type="email" name="email" required autocomplete="email"><button class="button" type="submit">OK</button></div>
+  </form>
+  {%- else %}
+  <p>{{ t.magazine.newsletter_soon }}</p>
+  <a class="rss-link" href="{{ feed }}">{{ t.magazine.rss }}</a>
+  {%- endif %}
+</div>
+{%- endmacro %}

@@ -1,0 +1,51 @@
+# Mati Mati website settings.
+# Texts of the interface are in i18n/<language>.toml; articles in content/.
+
+name = "Mati Mati"
+
+# Public address, without a trailing slash. Change it when the site moves to
+# its own domain (e.g. "https://matimati.org").
+url = "https://nojsuon.github.io/matimati"
+
+# Contact email. While it is empty, the contact page points to Instagram.
+email = ""
+
+instagram = "matidemati"
+kofi = "https://ko-fi.com/suondilut"
+
+# Email newsletter (next phase). The RSS feeds (/feed.xml, /en/feed.xml,
+# /zh/feed.xml) are already published: a service such as MailerLite or
+# Buttondown reads them and emails each new article to subscribers.
+[newsletter]
+enabled = false
+action = ""   # address of the service's sign-up form
+
+# Advertising (needs the site's own domain first; AdSense does not accept
+# *.github.io). While disabled, no ad code or space appears anywhere.
+[ads]
+enabled = false
+client = ""   # "ca-pub-…"
+slot = ""
+
+# Mati Mati tools, shown on the home page and on /herramientas/.
+[[tools]]
+id = "conjugador"
+url = "https://nojsuon.github.io/coniugatio/"
+serie = "mar"
+
+[tools.text.es]
+name = "Conjugador"
+tag = "Lenguas de México"
+description = "Elige una lengua, escribe un verbo y mira cómo cambia con cada persona y cada tiempo."
+
+[tools.text.en]
+name = "Verb conjugator"
+tag = "Languages of Mexico"
+description = "Pick a language, type a verb and see how it changes with each person and tense."
+url = "https://nojsuon.github.io/coniugatio/en/"
+
+[tools.text.zh]
+name = "动词变位工具"
+tag = "墨西哥的语言"
+description = "选择一种语言，输入一个动词，看看它如何随人称和时态变化。"
+url = "https://nojsuon.github.io/coniugatio/zh/"

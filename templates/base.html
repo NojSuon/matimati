@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="{{ loc.html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.name }}</title>
+  <meta name="description" content="{{ page.description }}">
+  <link rel="canonical" href="{{ page.abs }}">
+  {%- for a in alternates %}
+  <link rel="alternate" hreflang="{{ a.hreflang }}" href="{{ a.abs }}">
+  {%- endfor %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }} · {{ t.magazine.title }}" href="{{ feed }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ page.title or site.name }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:url" content="{{ page.abs }}">
+  <meta property="og:locale" content="{{ loc.og_locale }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ logo_abs }}{% endblock %}">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#C1502E">
+  <link rel="icon" href="{{ base }}static/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {#- Manual §05: Fredoka SemiBold/Bold for titles, Nunito Sans Regular/Bold for text.
+      Noto Sans covers letters of indigenous orthographies the brand fonts lack. #}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@400;700&family=Noto+Sans:wght@400;700{% if loc.code == 'zh' %}&family=Noto+Sans+SC:wght@400;700{% endif %}&display=swap">
+  <link rel="stylesheet" href="{{ base }}static/css/mati.css">
+  <script type="module" src="{{ base }}static/js/site.js"></script>
+  {%- if site.ads.enabled and site.ads.client %}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.ads.client }}" crossorigin="anonymous"></script>
+  {%- endif %}
+  {% block head %}{% endblock %}
+</head>
+<body data-serie="{{ serie | default('mati') }}">
+  <a class="skip-link" href="#contenido">{{ t.common.skip }}</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="{{ home }}" {% if page.id == 'home' %}aria-current="page"{% endif %}>
+        {% include "partials/logo.html" %}
+        <span>{{ site.name }}</span>
+      </a>
+      <nav class="site-nav" aria-label="{{ t.nav.label }}">
+        <ul>
+          {%- for item in nav %}
+          <li><a href="{{ item.href }}" {% if item.current or (item.id == 'magazine' and page.id == 'article') %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <div class="header-end">
+        <nav class="lang-switches" aria-label="{{ t.nav.languages }}">
+          {%- for a in alternates %}
+          {%- if a.current %}
+          <span class="lang-switch" aria-current="true" lang="{{ a.hreflang }}">{{ a.label }}</span>
+          {%- else %}
+          <a class="lang-switch" href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}" title="{{ a.name }}"><span aria-hidden="true">{{ a.label }}</span><span class="visually-hidden">{{ a.name }}</span></a>
+          {%- endif %}
+          {%- endfor %}
+        </nav>
+        <a class="donate" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.common.donate }}<span class="visually-hidden"> {{ t.common.donate_hidden }}</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    {% block main %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="pattern-strip pattern-p01 pattern-strip--footer" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="footer-brand">
+        <a class="brand" href="{{ home }}">
+          {% include "partials/logo.html" %}
+          <span>{{ site.name }}</span>
+        </a>
+        <p>{{ t.footer.about }}</p>
+      </div>
+      <ul class="footer-links">
+        {%- for item in nav %}
+        <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+        {%- endfor %}
+        <li><a href="{{ links.support }}">{{ t.support.title }}</a></li>
+      </ul>
+      <ul class="footer-links">
+        <li><a href="{{ links.instagram }}" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
+        <li><a href="{{ site.kofi }}" target="_blank" rel="noopener">Ko-fi<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
+        {%- if site.email %}
+        <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        {%- endif %}
+        <li><a href="{{ feed }}">{{ t.footer.rss }}</a></li>
+      </ul>
+    </div>
+    <div class="wrap footer-bottom">
+      <p class="caption">© {{ year }} {{ t.footer.rights }}</p>
+    </div>
+  </footer>
+</body>
+</html>

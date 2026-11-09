@@ -1,0 +1,164 @@
+# Textos del sitio en español (lengua principal). Voz: cálida, clara, de tú
+# (Manual §02). Las otras lenguas tienen las mismas claves.
+
+html_lang = "es"
+hreflang = "es"
+og_locale = "es_MX"
+label = "ES"
+switch_name = "Ver esta página en español"
+months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+date_format = "{d} de {month} de {y}"
+reading_rate = 200
+
+# Direcciones de las páginas: /revista/, /herramientas/…
+[routes]
+magazine = "revista"
+tools = "herramientas"
+about = "nosotros"
+support = "apoya"
+contact = "contacto"
+
+[nav]
+label = "Menú principal"
+home = "Inicio"
+magazine = "Revista"
+tools = "Herramientas"
+about = "Nosotros"
+contact = "Contacto"
+languages = "Idioma del sitio"
+
+[common]
+skip = "Ir al contenido"
+donate = "Dónanos"
+donate_hidden = "(en Ko-fi, se abre en otra pestaña)"
+new_tab = "(se abre en otra pestaña)"
+read = "Leer"
+minutes = "min de lectura"
+all_articles = "Ver todos los artículos"
+logo_alt = "Logotipo de Mati Mati: las letras MA y TI sobre cuatro patrones textiles."
+
+[home]
+description = "Mati Mati es una comunidad para aprender, preservar y difundir lenguas indígenas. Lee nuestra revista, usa nuestras herramientas y súmate."
+tag = "Comunidad de lenguas indígenas"
+title = "Cada lengua es una forma de ver el mundo"
+lead = "Leemos, aprendemos y compartimos lenguas indígenas de México, en comunidad. Aquí encuentras nuestra revista, nuestras herramientas y formas de sumarte."
+cta_primary = "Lee la revista"
+cta_secondary = "Conoce las herramientas"
+intro_title = "¿Qué es Mati Mati?"
+intro_1 = "Mati Mati es una comunidad y plataforma web para enseñar, preservar y difundir lenguas indígenas y minoritarias. Hoy trabajamos con lenguas de México y queremos sumar cada vez más regiones y comunidades."
+intro_2 = "Aprender una lengua es entrar a una forma distinta de ver el mundo, y hacerlo en comunidad."
+pillar_1_title = "Lee"
+pillar_1 = "Artículos sobre lenguas, palabras, historias y conceptos."
+pillar_2_title = "Practica"
+pillar_2 = "Herramientas gratuitas para aprender, como el conjugador."
+pillar_3_title = "Súmate"
+pillar_3 = "Comparte, cuéntanos de tu lengua o apoya el proyecto."
+latest_title = "Lo más reciente en la revista"
+tools_title = "Herramientas"
+tools_lead = "Para practicar a tu ritmo, gratis y sin crear cuenta."
+
+[instagram]
+title = "Síguenos en Instagram"
+lead = "Palabras del día, datos y carruseles para aprender un poco cada semana."
+follow = "Ver @{handle} en Instagram"
+empty = "Pronto verás aquí nuestras publicaciones. Mientras, visítanos en Instagram."
+
+[magazine]
+title = "Revista"
+description = "Artículos de Mati Mati sobre lenguas indígenas: palabras, historias, conceptos y herramientas."
+tag = "Revista Mati Mati"
+lead = "Palabras, historias y conceptos para conocer mejor las lenguas indígenas. Escrita por el equipo de Mati Mati."
+filter = "Filtrar por tema"
+filter_all = "Todos"
+count_one = "1 artículo"
+count_many = "{n} artículos"
+empty = "Muy pronto publicaremos el primer artículo."
+rss = "Suscríbete por RSS"
+newsletter_soon = "Muy pronto podrás recibir cada artículo en tu correo."
+
+[article]
+default_author = "Equipo Mati Mati"
+by = "Por"
+back = "Volver a la revista"
+share = "Compartir"
+copied = "Enlace copiado"
+also_in = "También en"
+more = "Sigue leyendo"
+tags = "Temas"
+support_title = "¿Te gustó este artículo?"
+support_text = "Mati Mati es un proyecto independiente. Con tu apoyo seguimos escribiendo y creando herramientas gratuitas."
+
+[tools]
+title = "Herramientas"
+description = "Herramientas gratuitas de Mati Mati para aprender lenguas indígenas."
+tag = "Herramientas Mati Mati"
+lead = "Herramientas gratuitas para aprender y practicar lenguas indígenas. Todas funcionan en tu navegador, sin crear cuenta."
+open = "Abrir"
+soon_title = "¿Qué herramienta te gustaría?"
+soon_text = "Estamos preparando más. Cuéntanos qué te ayudaría a aprender."
+
+[about]
+title = "Nosotros"
+description = "Quiénes somos, qué hacemos y por qué: la misión y la visión de Mati Mati."
+tag = "Sobre Mati Mati"
+lead = "Somos una comunidad que cree que cada lengua guarda una forma única de nombrar el mundo."
+mission_title = "Misión"
+mission = "Crear una comunidad y una plataforma web donde aprender, preservar y difundir lenguas indígenas y minoritarias sea accesible, atractivo y respetuoso."
+vision_title = "Visión"
+vision = "Ser un espacio de referencia que crece de México hacia otras regiones, sumando cada vez más lenguas y comunidades."
+promise_title = "Nuestra promesa"
+promise = "Aprender una lengua es entrar a una forma distinta de ver el mundo, y hacerlo en comunidad."
+values_title = "Cómo trabajamos"
+value_1_title = "Con respeto"
+value_1 = "Hablamos de lenguas, no de «dialectos», y nombramos cada una con su variante."
+value_2_title = "Con fuentes"
+value_2 = "Citamos a quien enseña y validamos las palabras con hablantes."
+value_3_title = "En comunidad"
+value_3 = "Preguntamos, escuchamos y damos crédito a cada aporte."
+value_4_title = "Para todas las personas"
+value_4 = "Textos claros, herramientas gratuitas y diseño accesible."
+
+[support]
+title = "Apoya"
+description = "Apoya a Mati Mati con una donación en Ko-fi o compartiendo nuestro trabajo."
+tag = "Apoya a Mati Mati"
+lead = "Mati Mati es un proyecto independiente. Tu apoyo nos ayuda a escribir, crear herramientas gratuitas y sumar más lenguas."
+donate_title = "Haz una donación"
+donate_text = "Puedes donar una sola vez o cada mes en Ko-fi. Cualquier cantidad cuenta."
+donate_button = "Donar en Ko-fi"
+uses_title = "¿A qué se destina tu apoyo?"
+use_1 = "Investigar y escribir artículos para la revista."
+use_2 = "Crear y mantener herramientas gratuitas como el conjugador."
+use_3 = "Trabajar con hablantes y dar crédito a quien enseña."
+other_title = "Otras formas de ayudar"
+other_1 = "Comparte un artículo con alguien a quien le pueda servir."
+other_2 = "Síguenos en Instagram y comenta nuestras publicaciones."
+other_3 = "Cuéntanos sobre tu lengua o tu comunidad."
+
+[contact]
+title = "Contacto"
+description = "Escríbenos: dudas, propuestas, correcciones o ideas para Mati Mati."
+tag = "Contacto"
+lead = "¿Tienes una duda, una propuesta o una corrección? Nos encanta leerte."
+email_title = "Escríbenos un correo"
+email_text = "Respondemos en unos días."
+email_subject = "Hola, Mati Mati"
+instagram_title = "Mándanos un mensaje"
+instagram_text = "También respondemos por mensaje directo en Instagram."
+topics_title = "Puedes escribirnos para"
+topic_1 = "Proponer una lengua, una palabra o un tema."
+topic_2 = "Corregir un dato o una palabra."
+topic_3 = "Colaborar como hablante, docente o institución."
+
+[footer]
+about = "Comunidad para aprender, preservar y difundir lenguas indígenas."
+rss = "RSS"
+rights = "Mati Mati"
+
+[notfound]
+title = "No encontramos esta página"
+text = "Quizá cambió de dirección o ya no existe."
+home = "Ir al inicio"
+
+[ads]
+label = "Publicidad"
