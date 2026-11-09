@@ -42,6 +42,8 @@ jobs:
         run: cargo run --release -- --base "${{ github.event.repository.name }}"
         env:
           INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+          # Only for "EAA…" tokens, if the account isn't found by its handle.
+          INSTAGRAM_USER_ID: ${{ vars.INSTAGRAM_USER_ID }}
 
       - uses: actions/configure-pages@v5
 

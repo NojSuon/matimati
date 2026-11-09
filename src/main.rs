@@ -370,7 +370,7 @@ fn build(root: &Path, opts: &Options) -> Result<usize, String> {
         fs::remove_dir_all(&opts.out).map_err(|e| format!("cleaning {}: {e}", opts.out.display()))?;
     }
     copy_dir(&root.join("static"), &opts.out.join("static"))?;
-    let instagram = instagram::load(root, &opts.out.join("static"), INSTAGRAM_POSTS)?;
+    let instagram = instagram::load(root, &opts.out.join("static"), &config.instagram, INSTAGRAM_POSTS)?;
 
     let mut site = Site {
         config,
