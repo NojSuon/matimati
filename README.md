@@ -11,8 +11,8 @@ A small Rust program turns the content into static HTML for GitHub Pages:
 | Folder / file | What it holds |
 |---|---|
 | `content/articles/es/`, `en/`, `zh/` | One Markdown file per article |
-| `content/instagram.toml` | Instagram posts shown on the home page |
-| `site.toml` | Name, email, Instagram, Ko-fi, tools, newsletter and ads settings |
+| `content/instagram.toml` | Instagram posts by hand (used only without the API token) |
+| `site.toml` | Name, email, Instagram, Ko-fi, projects (home carousel), newsletter and ads |
 | `i18n/es.toml`, `en.toml`, `zh.toml` | Every interface text, per language |
 | `templates/` | HTML templates (MiniJinja, Jinja-like syntax) |
 | `static/` | CSS (brand tokens), JavaScript, images |
@@ -32,7 +32,7 @@ description = "Una o dos frases: aparece en la tarjeta, en buscadores y en el RS
 date = "2026-11-20"
 key = "mi-articulo"      # the same key in the en/ and zh/ translations links them
 tags = ["Náhuatl", "Palabras"]
-serie = "mar"            # mati, mar, milpa, jacaranda, fiesta, anil, barro, noche
+serie = "mar"            # optional: mati, mar, milpa, jacaranda, fiesta, anil, barro, noche (default: palette of the day)
 # author = "Nombre"      # default: Equipo Mati Mati
 # image = "img/articulos/mi-foto.jpg"   # optional, inside static/
 # image_alt = "Descripción de la imagen"
@@ -50,6 +50,26 @@ Inside the text you can use:
 - A highlighted word of the day: `<p class="word"><span class="lang" lang="nah">Tlasojkamati</span> «gracias» en náhuatl</p>`
 
 Words in indigenous languages should be checked with speakers before publishing (Manual §02).
+
+## Instagram, automatically
+
+Every day at 6:00 (Mexico City) the site rebuilds and pulls the latest 6 posts from @matidemati through the official Instagram API. Images are copied into the site, so they keep working. One-time setup:
+
+1. The Instagram account must be **professional** (Business or Creator): in the app, Settings → Account type and tools.
+2. At https://developers.facebook.com create an app, add the **Instagram** product, choose **API setup with Instagram login**, and add @matidemati as the account. Generate an **access token** (long-lived, 60 days).
+3. In this repository: **Settings → Secrets and variables → Actions → New repository secret**, name `INSTAGRAM_TOKEN`, value: the token.
+4. Run the workflow once (Actions → Deploy to GitHub Pages → Run workflow).
+
+Each build also refreshes the token's 60-day validity, so as long as the site rebuilds daily it keeps working. If the API fails, the build doesn't: the home page falls back to `content/instagram.toml`.
+
+To preview the grid without a token, point `INSTAGRAM_FIXTURE` at a saved API answer (JSON with a `data` list).
+
+## Look and feel
+
+- **Palette of the day:** each day the site takes one of the manual's eight colour series (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche), the same for everyone on that date. Preview one with `?paleta=milpa`. An article or project with its own `serie` keeps it.
+- **Dark mode:** the moon/sun button; it follows the device setting until someone chooses, and remembers the choice.
+- **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette.
+- **Home carousel:** the `[[projects]]` in `site.toml`, in order.
 
 ## Run it locally
 

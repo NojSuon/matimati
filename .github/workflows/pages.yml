@@ -1,5 +1,8 @@
 # Builds the site (Rust → static files) and publishes it to GitHub Pages on
-# every push to main.
+# every push to main, and once a day so new Instagram posts appear on their own.
+#
+# Instagram: add the repository secret INSTAGRAM_TOKEN (Settings → Secrets and
+# variables → Actions). Without it, the home page uses content/instagram.toml.
 #
 # One-time setup in the repo: Settings → Pages → Build and deployment →
 # Source: "GitHub Actions".
@@ -9,6 +12,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *" # every day, 6:00 in Mexico City
 
 permissions:
   contents: read
@@ -35,6 +40,8 @@ jobs:
       - name: Build site
         # Pages serves the site from /<repo-name>/
         run: cargo run --release -- --base "${{ github.event.repository.name }}"
+        env:
+          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
 
       - uses: actions/configure-pages@v5
 

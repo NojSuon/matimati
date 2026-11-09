@@ -35,6 +35,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
+mod instagram;
+
 use minijinja::{context, path_loader, Environment, Value};
 use serde::{Deserialize, Serialize};
 
@@ -119,8 +121,10 @@ struct Config {
     newsletter: Newsletter,
     #[serde(default)]
     ads: Ads,
+    /// Mati Mati projects: the home carousel, and the tools page (those
+    /// with `tool = true`).
     #[serde(default)]
-    tools: Vec<Tool>,
+    projects: Vec<Project>,
 }
 
 /// Email sign-up form. Off until a newsletter service is chosen.
@@ -147,24 +151,45 @@ struct Ads {
 }
 
 #[derive(Deserialize, Serialize)]
-struct Tool {
+#[serde(deny_unknown_fields)]
+struct Project {
     id: String,
-    url: String,
-    #[serde(default = "default_serie")]
+    /// External address (a tool on its own site)…
+    #[serde(default)]
+    url: Option<String>,
+    /// …or a page of this site, by route id ("magazine", "support"…).
+    #[serde(default)]
+    page: Option<String>,
+    /// Fixed colour series; empty = the palette of the day.
+    #[serde(default)]
     serie: String,
-    /// Name and description per locale ("es", "en", "zh").
-    text: BTreeMap<String, ToolText>,
+    /// Illustration in the carousel: "phone", "magazine", "verbs", "heart".
+    #[serde(default = "default_art")]
+    art: String,
+    /// Also listed on the tools page.
+    #[serde(default)]
+    tool: bool,
+    /// Texts per locale ("es", "en", "zh").
+    text: BTreeMap<String, ProjectText>,
 }
 
 #[derive(Deserialize, Serialize, Clone)]
-struct ToolText {
+#[serde(deny_unknown_fields)]
+struct ProjectText {
     name: String,
     description: String,
     #[serde(default)]
     tag: String,
-    /// Address of this locale's version of the tool, if it differs.
+    /// Text of the main button (default: "Open").
+    #[serde(default)]
+    button: String,
+    /// Address of this locale's version, if it differs.
     #[serde(default)]
     url: Option<String>,
+}
+
+fn default_art() -> String {
+    "phone".into()
 }
 
 /// The fields of `i18n/<locale>.toml` the generator itself needs. The whole
@@ -198,21 +223,15 @@ const LOCALES: [&str; 3] = ["es", "en", "zh"];
 /// Pages that exist in every locale, by route id (see `[routes]` in i18n).
 const PAGES: [&str; 5] = ["magazine", "tools", "about", "support", "contact"];
 
-/// Colour series of the manual (§4 C) and the pattern that goes with each.
-const SERIES: [(&str, &str); 8] = [
-    ("mati", "p01"),
-    ("mar", "p02"),
-    ("milpa", "p12"),
-    ("jacaranda", "p30"),
-    ("fiesta", "p09"),
-    ("anil", "p14"),
-    ("barro", "p03"),
-    ("noche", "p13"),
+/// Colour series of the manual (§4 C). The site shows one per day, in this
+/// order (static/js/theme.js has the same list).
+const SERIES: [&str; 8] = [
+    "mati", "mar", "milpa", "jacaranda", "fiesta", "anil", "barro", "noche",
 ];
 
-fn default_serie() -> String {
-    "mati".into()
-}
+/// Instagram posts on the home page.
+const INSTAGRAM_POSTS: usize = 6;
+
 
 /// Front matter of an article, between `+++` lines, in TOML.
 #[derive(Deserialize)]
@@ -227,7 +246,8 @@ struct Front {
     key: Option<String>,
     #[serde(default)]
     tags: Vec<String>,
-    #[serde(default = "default_serie")]
+    /// Colour series of the article; empty = the palette of the day.
+    #[serde(default)]
     serie: String,
     author: Option<String>,
     /// Optional cover image, relative to static/ (e.g. "img/articulos/x.jpg").
@@ -248,7 +268,6 @@ struct Article {
     date_human: String,
     tags: Vec<String>,
     serie: String,
-    pattern: String,
     author: String,
     image: Option<String>,
     image_alt: String,
@@ -258,21 +277,6 @@ struct Article {
     href: String,
     abs: String,
     html: String,
-}
-
-#[derive(Deserialize, Serialize, Default)]
-struct Instagram {
-    #[serde(default)]
-    posts: Vec<InstagramPost>,
-}
-
-#[derive(Deserialize, Serialize)]
-struct InstagramPost {
-    /// Link of the post, e.g. https://www.instagram.com/p/XXXXXXXX/
-    url: String,
-    /// Short text shown before the embed loads (and if it can't load).
-    #[serde(default)]
-    caption: String,
 }
 
 #[derive(Serialize)]
@@ -303,7 +307,7 @@ struct Site<'a> {
     locales: Vec<Locale>,
     /// Articles per locale, newest first.
     articles: Vec<Vec<Article>>,
-    instagram: Instagram,
+    instagram: Vec<instagram::Post>,
     env: Environment<'a>,
     base: String,
     out: PathBuf,
@@ -341,12 +345,18 @@ fn build(root: &Path, opts: &Options) -> Result<usize, String> {
         locales.push(Locale { code, prefix, meta, strings });
     }
 
-    let instagram_path = root.join("content").join("instagram.toml");
-    let instagram = if instagram_path.exists() {
-        read_toml(&instagram_path)?
-    } else {
-        Instagram::default()
-    };
+    for p in &config.projects {
+        if !p.serie.is_empty() && !SERIES.contains(&p.serie.as_str()) {
+            return Err(format!("site.toml: project {}: unknown serie \"{}\"", p.id, p.serie));
+        }
+        if p.url.is_none() && p.page.as_deref().is_none_or(|id| !PAGES.contains(&id)) {
+            return Err(format!(
+                "site.toml: project {} needs url = \"https://…\" or page = one of {}",
+                p.id,
+                PAGES.join(", ")
+            ));
+        }
+    }
 
     let mut articles = Vec::new();
     for loc in &locales {
@@ -360,6 +370,7 @@ fn build(root: &Path, opts: &Options) -> Result<usize, String> {
         fs::remove_dir_all(&opts.out).map_err(|e| format!("cleaning {}: {e}", opts.out.display()))?;
     }
     copy_dir(&root.join("static"), &opts.out.join("static"))?;
+    let instagram = instagram::load(root, &opts.out.join("static"), INSTAGRAM_POSTS)?;
 
     let mut site = Site {
         config,
@@ -419,14 +430,13 @@ fn load_articles(
         }
         let date_human = human_date(&front.date, &loc.meta)
             .ok_or_else(|| format!("{}: date must look like 2026-11-08", file.display()))?;
-        let pattern = SERIES
-            .iter()
-            .find(|(s, _)| *s == front.serie)
-            .map(|(_, p)| p.to_string())
-            .ok_or_else(|| {
-                let names: Vec<_> = SERIES.iter().map(|(s, _)| *s).collect();
-                format!("{}: serie must be one of {}", file.display(), names.join(", "))
-            })?;
+        if !front.serie.is_empty() && !SERIES.contains(&front.serie.as_str()) {
+            return Err(format!(
+                "{}: serie must be one of {} (or left out for the palette of the day)",
+                file.display(),
+                SERIES.join(", ")
+            ));
+        }
         let path = format!("{}{magazine}/{slug}/", loc.prefix);
         list.push(Article {
             key: front.key.unwrap_or_else(|| slug.clone()),
@@ -442,7 +452,6 @@ fn load_articles(
             date_human,
             tags: front.tags,
             serie: front.serie,
-            pattern,
             author: front.author.unwrap_or_else(|| {
                 loc.strings["article"]["default_author"]
                     .as_str()
@@ -527,6 +536,18 @@ fn rfc822(date: &str) -> String {
     format!("{weekday}, {d:02} {month} {y} 12:00:00 +0000")
 }
 
+/// Encodes text for a URL query value (RFC 3986 unreserved kept as is).
+fn percent_encode(s: &str) -> String {
+    s.bytes()
+        .map(|b| match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                (b as char).to_string()
+            }
+            _ => format!("%{b:02X}"),
+        })
+        .collect()
+}
+
 fn xml_escape(s: &str) -> String {
     s.replace('&', "&amp;")
         .replace('<', "&lt;")
@@ -582,21 +603,81 @@ impl Site<'_> {
             .collect()
     }
 
-    fn tools(&self, li: usize) -> Vec<Value> {
-        let code = self.locales[li].code;
+    /// Projects in this locale (texts fall back to Spanish).
+    fn projects(&self, li: usize) -> Vec<Value> {
+        let loc = &self.locales[li];
+        let open = loc.strings["tools"]["open"].as_str().unwrap_or("Abrir");
         self.config
-            .tools
+            .projects
             .iter()
-            .filter_map(|tool| {
-                let text = tool.text.get(code).or_else(|| tool.text.get("es"))?;
+            .filter_map(|p| {
+                let text = p.text.get(loc.code).or_else(|| p.text.get("es"))?;
+                let (url, external) = match (&text.url, &p.url, &p.page) {
+                    (Some(u), _, _) | (None, Some(u), _) => (u.clone(), true),
+                    (None, None, Some(id)) => {
+                        (format!("{}{}", self.base, self.page_path(li, id)), false)
+                    }
+                    _ => return None,
+                };
                 Some(Value::from_serialize(context! {
-                    id => tool.id,
-                    serie => tool.serie,
-                    url => text.url.clone().unwrap_or_else(|| tool.url.clone()),
+                    id => p.id,
+                    serie => p.serie,
+                    art => p.art,
+                    tool => p.tool,
+                    url => url,
+                    external => external,
                     name => text.name,
                     description => text.description,
                     tag => text.tag,
+                    button => if text.button.is_empty() { open } else { &text.button },
                 }))
+            })
+            .collect()
+    }
+
+    /// Topics bar: this locale's article tags, most used first, each linking
+    /// to the magazine filtered by it.
+    fn topics(&self, li: usize) -> Vec<Value> {
+        let mut count: BTreeMap<&str, usize> = BTreeMap::new();
+        for a in &self.articles[li] {
+            for tag in &a.tags {
+                *count.entry(tag).or_default() += 1;
+            }
+        }
+        let mut tags: Vec<(&str, usize)> = count.into_iter().collect();
+        tags.sort_by(|a, b| b.1.cmp(&a.1).then(a.0.cmp(b.0)));
+        let magazine = format!("{}{}", self.base, self.page_path(li, "magazine"));
+        tags.into_iter()
+            .map(|(tag, _)| {
+                Value::from_serialize(context! {
+                    name => tag,
+                    href => format!("{magazine}?tema={}", percent_encode(tag)),
+                })
+            })
+            .collect()
+    }
+
+    /// Instagram posts with dates in this locale's format.
+    fn posts(&self, li: usize) -> Vec<Value> {
+        let meta = &self.locales[li].meta;
+        self.instagram
+            .iter()
+            .map(|p| {
+                let image = p.image.as_ref().map(|i| {
+                    if i.starts_with("http") || i.starts_with('/') {
+                        i.clone()
+                    } else {
+                        format!("{}static/{i}", self.base)
+                    }
+                });
+                Value::from_serialize(context! {
+                    url => p.url,
+                    caption => p.caption,
+                    kind => p.kind,
+                    image => image,
+                    date => p.date,
+                    date_human => p.date.as_deref().and_then(|d| human_date(d, meta)),
+                })
             })
             .collect()
     }
@@ -647,6 +728,8 @@ impl Site<'_> {
                 path => path,
                 abs => self.abs(path),
             },
+            topics => self.topics(li),
+            series => SERIES,
             logo_abs => self.abs("static/img/mati-logo-textil.png"),
             year => self.articles[li].first().map(|a| &a.date[..4]).unwrap_or("2026"),
         }
@@ -669,9 +752,9 @@ impl Site<'_> {
         // Home
         let path = self.page_path(li, "home");
         let ctx = context! {
-            articles => Value::from_serialize(self.articles[li].iter().take(3).collect::<Vec<_>>()),
-            tools => self.tools(li),
-            instagram => Value::from_serialize(&self.instagram),
+            articles => Value::from_serialize(self.articles[li].iter().take(5).collect::<Vec<_>>()),
+            projects => self.projects(li),
+            posts => self.posts(li),
             alternates => Value::from_serialize(self.alternates(li, |i| self.page_path(i, "home"))),
             ..self.common(li, "home", "", &text("home", "description"), &path)
         };
@@ -687,7 +770,7 @@ impl Site<'_> {
             let ctx = context! {
                 articles => Value::from_serialize(&self.articles[li]),
                 tags => Value::from_serialize(&tags),
-                tools => self.tools(li),
+                projects => self.projects(li),
                 alternates => Value::from_serialize(self.alternates(li, |i| self.page_path(i, id))),
                 ..self.common(li, id, &text(section, "title"), &text(section, "description"), &path)
             };

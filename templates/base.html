@@ -3,6 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {#- Before anything paints: the palette of the day (one of the manual's eight
+      series, the same for everyone on a given date; ?paleta=milpa to preview
+      one) and the light/dark theme (saved choice, else the system's). #}
+  <script>
+    (function () {
+      var d = document.documentElement, s = {{ series | tojson }};
+      var q = new URLSearchParams(location.search).get("paleta");
+      var n = new Date(), day = Math.floor(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()) / 864e5);
+      d.setAttribute("data-serie", s.indexOf(q) >= 0 ? q : s[day % s.length]);
+      var t = null;
+      try { t = localStorage.getItem("mati-tema"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      d.setAttribute("data-theme", t);
+    })();
+  </script>
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.name }}</title>
   <meta name="description" content="{{ page.description }}">
   <link rel="canonical" href="{{ page.abs }}">
@@ -18,7 +33,7 @@
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   <meta property="og:image" content="{% block og_image %}{{ logo_abs }}{% endblock %}">
   <meta name="twitter:card" content="summary">
-  <meta name="theme-color" content="#C1502E">
+  <meta name="theme-color" content="#FFF9F5">
   <link rel="icon" href="{{ base }}static/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,35 +47,70 @@
   {%- endif %}
   {% block head %}{% endblock %}
 </head>
-<body data-serie="{{ serie | default('mati') }}">
+<body{% if serie %} data-serie="{{ serie }}"{% endif %}>
   <a class="skip-link" href="#contenido">{{ t.common.skip }}</a>
 
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="{{ home }}" {% if page.id == 'home' %}aria-current="page"{% endif %}>
-        {% include "partials/logo.html" %}
-        <span>{{ site.name }}</span>
-      </a>
-      <nav class="site-nav" aria-label="{{ t.nav.label }}">
-        <ul>
-          {%- for item in nav %}
-          <li><a href="{{ item.href }}" {% if item.current or (item.id == 'magazine' and page.id == 'article') %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
-          {%- endfor %}
-        </ul>
-      </nav>
-      <div class="header-end">
-        <nav class="lang-switches" aria-label="{{ t.nav.languages }}">
-          {%- for a in alternates %}
-          {%- if a.current %}
-          <span class="lang-switch" aria-current="true" lang="{{ a.hreflang }}">{{ a.label }}</span>
-          {%- else %}
-          <a class="lang-switch" href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}" title="{{ a.name }}"><span aria-hidden="true">{{ a.label }}</span><span class="visually-hidden">{{ a.name }}</span></a>
-          {%- endif %}
-          {%- endfor %}
+    <div class="masthead">
+      <div class="wrap">
+        <a class="brand" href="{{ home }}" {% if page.id == 'home' %}aria-current="page"{% endif %}>
+          {% include "partials/logo.html" %}
+          <span>{{ site.name }}</span>
+        </a>
+        <nav class="site-nav" aria-label="{{ t.nav.label }}">
+          <ul>
+            {%- for item in nav %}
+            <li><a href="{{ item.href }}" {% if item.current or (item.id == 'magazine' and page.id == 'article') %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+            {%- endfor %}
+          </ul>
         </nav>
-        <a class="donate" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.common.donate }}<span class="visually-hidden"> {{ t.common.donate_hidden }}</span></a>
+        <div class="header-end">
+          <button type="button" class="theme-toggle" data-theme-toggle
+                  data-label-dark="{{ t.theme.to_dark }}" data-label-light="{{ t.theme.to_light }}"
+                  aria-label="{{ t.theme.to_dark }}" title="{{ t.theme.to_dark }}">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <nav class="lang-switches" aria-label="{{ t.nav.languages }}">
+            {%- for a in alternates %}
+            {%- if a.current %}
+            <span class="lang-switch" aria-current="true" lang="{{ a.hreflang }}">{{ a.label }}</span>
+            {%- else %}
+            <a class="lang-switch" href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}" title="{{ a.name }}"><span aria-hidden="true">{{ a.label }}</span><span class="visually-hidden">{{ a.name }}</span></a>
+            {%- endif %}
+            {%- endfor %}
+          </nav>
+          <a class="button button--line button--small button--follow" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.nav.follow }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+          <a class="button button--kofi button--small" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.common.donate }}<span class="visually-hidden"> {{ t.common.donate_hidden }}</span></a>
+        </div>
       </div>
     </div>
+    <nav class="topics" aria-label="{{ t.nav.topics }}">
+      <div class="wrap">
+        <ul>
+          {%- for topic in topics[:4] %}
+          <li><a href="{{ topic.href }}">{{ topic.name }}</a></li>
+          {%- endfor %}
+          {%- if topics | length > 4 %}
+          <li>
+            <details>
+              <summary>{{ t.nav.more }}</summary>
+              <ul>
+                {%- for topic in topics[4:] %}
+                <li><a href="{{ topic.href }}">{{ topic.name }}</a></li>
+                {%- endfor %}
+              </ul>
+            </details>
+          </li>
+          {%- endif %}
+        </ul>
+        <ul>
+          <li><a href="{{ links.tools }}">{{ t.nav.tools }}</a></li>
+          <li><a href="{{ home }}#instagram">Instagram</a></li>
+          <li><a href="{{ links.support }}">{{ t.support.title }}</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
   <main id="contenido" tabindex="-1">
@@ -68,7 +118,6 @@
   </main>
 
   <footer class="site-footer">
-    <div class="pattern-strip pattern-p01 pattern-strip--footer" aria-hidden="true"></div>
     <div class="wrap">
       <div class="footer-brand">
         <a class="brand" href="{{ home }}">
@@ -77,23 +126,31 @@
         </a>
         <p>{{ t.footer.about }}</p>
       </div>
-      <ul class="footer-links">
-        {%- for item in nav %}
-        <li><a href="{{ item.href }}">{{ item.label }}</a></li>
-        {%- endfor %}
-        <li><a href="{{ links.support }}">{{ t.support.title }}</a></li>
-      </ul>
-      <ul class="footer-links">
-        <li><a href="{{ links.instagram }}" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
-        <li><a href="{{ site.kofi }}" target="_blank" rel="noopener">Ko-fi<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
-        {%- if site.email %}
-        <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-        {%- endif %}
-        <li><a href="{{ feed }}">{{ t.footer.rss }}</a></li>
-      </ul>
+      <div class="footer-col">
+        <h2>{{ t.footer.explore }}</h2>
+        <ul class="footer-links">
+          {%- for item in nav %}
+          <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+          {%- endfor %}
+          <li><a href="{{ links.support }}">{{ t.support.title }}</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>{{ t.footer.follow }}</h2>
+        <ul class="footer-links">
+          <li><a href="{{ links.instagram }}" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
+          <li><a href="{{ site.kofi }}" target="_blank" rel="noopener">Ko-fi<span class="visually-hidden"> {{ t.common.new_tab }}</span></a></li>
+          {%- if site.email %}
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          {%- endif %}
+          <li><a href="{{ feed }}">{{ t.footer.rss }}</a></li>
+        </ul>
+      </div>
     </div>
+    <div class="patron patron-strip" aria-hidden="true"></div>
     <div class="wrap footer-bottom">
       <p class="caption">© {{ year }} {{ t.footer.rights }}</p>
+      <p class="caption" data-palette data-label="{{ t.palette.label }}" data-names='{{ t.palette.names | tojson }}'></p>
     </div>
   </footer>
 </body>

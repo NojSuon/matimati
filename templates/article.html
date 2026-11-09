@@ -19,12 +19,11 @@
 {% block main %}
 <article class="article">
   <header class="article-head">
-    <div class="pattern-strip pattern-{{ article.pattern }}" aria-hidden="true"></div>
     <div class="wrap wrap--text">
       <a class="back-link" href="{{ links.magazine }}">← {{ t.article.back }}</a>
       {%- if article.tags %}
       <ul class="tag-list" aria-label="{{ t.article.tags }}">
-        {%- for tag in article.tags %}<li class="tag">{{ tag }}</li>{% endfor %}
+        {%- for tag in article.tags %}<li><a class="tag" href="{{ links.magazine }}?tema={{ tag | urlencode }}">{{ tag }}</a></li>{% endfor %}
       </ul>
       {%- endif %}
       <h1>{{ article.title }}</h1>
@@ -53,14 +52,14 @@
       {{ article.html | safe }}
     </div>
     <div class="article-actions">
-      <button type="button" class="button button--ghost" data-share data-title="{{ article.title }}" data-copied="{{ t.article.copied }}" hidden>{{ t.article.share }}</button>
+      <button type="button" class="button button--line" data-share data-title="{{ article.title }}" data-copied="{{ t.article.copied }}" hidden>{{ t.article.share }}</button>
     </div>
   </div>
 </article>
 
 {{ m.ad_slot(site, t) }}
 
-{{ m.support_cta(t, site, links, t.article.support_title, t.article.support_text) }}
+{{ m.support_band(t, site, links, t.article.support_title, t.article.support_text) }}
 
 {%- if more %}
 <section class="section" aria-labelledby="more-title">
@@ -69,9 +68,9 @@
       <h2 id="more-title">{{ t.article.more }}</h2>
       <a class="link-more" href="{{ links.magazine }}">{{ t.common.all_articles }} →</a>
     </div>
-    <div class="article-grid">
-      {%- for a in more %}{{ m.article_card(a, t) }}{% endfor %}
-    </div>
+    <ul class="headlines">
+      {%- for a in more %}<li>{{ m.headline(a, t) }}</li>{% endfor %}
+    </ul>
   </div>
 </section>
 {%- endif %}

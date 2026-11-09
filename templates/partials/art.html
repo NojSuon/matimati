@@ -1,0 +1,70 @@
+{#- Original illustrations for the project carousel. Colours come from CSS
+    classes (.art-*), so they follow the palette of the day and dark mode.
+    Variable: art = "phone" | "magazine" | "verbs" | "heart". -#}
+<svg viewBox="0 0 400 360" aria-hidden="true" focusable="false">
+  {#- Sparkles: four-point stars, the brand's accent shapes. #}
+  <path class="art-accent art-line" d="M52 70l6 16 16 6-16 6-6 16-6-16-16-6 16-6z"/>
+  <path class="art-paper art-line" d="M348 250l5 12 12 5-12 5-5 12-5-12-12-5 12-5z"/>
+  <circle class="art-solid art-line" cx="334" cy="64" r="9"/>
+{%- if art == "phone" %}
+  <rect class="art-ink" x="128" y="22" width="152" height="300" rx="28" transform="translate(6 6)"/>
+  <rect class="art-paper art-line" x="128" y="22" width="152" height="300" rx="28"/>
+  <rect class="art-ink" x="182" y="34" width="44" height="8" rx="4"/>
+  <circle class="art-solid art-line" cx="156" cy="70" r="12"/>
+  <rect class="art-ink" x="176" y="63" width="70" height="7" rx="3.5"/>
+  <rect class="art-soft" x="176" y="74" width="44" height="6" rx="3"/>
+  <rect class="art-solid art-line" x="142" y="94" width="124" height="124" rx="10"/>
+  <path class="art-paper art-line" d="M204 120l9 18 20 3-14 14 3 20-18-9-18 9 3-20-14-14 20-3z"/>
+  <path class="art-accent art-line" d="M152 240c0-7 9-10 13-3 4-7 13-4 13 3 0 8-13 15-13 15s-13-7-13-15z"/>
+  <path class="art-line art-nofill" d="M192 236h20l-4 14-6-3h-10z"/>
+  <rect class="art-ink" x="142" y="264" width="110" height="7" rx="3.5"/>
+  <rect class="art-soft" x="142" y="278" width="80" height="6" rx="3"/>
+  <g transform="translate(270 128) rotate(6)">
+    <rect class="art-ink" x="4" y="4" width="104" height="58" rx="16"/>
+    <rect class="art-bg art-line" width="104" height="58" rx="16"/>
+    <path class="art-bg art-line" d="M24 56l-8 20 26-18"/>
+    <path class="art-solid" d="M38 30c0-9 12-13 17-4 5-9 17-5 17 4 0 11-17 19-17 19s-17-8-17-19z"/>
+  </g>
+{%- elif art == "magazine" %}
+  <g transform="rotate(-8 200 180)">
+    <rect class="art-ink" x="96" y="44" width="190" height="260" rx="10" transform="translate(6 6)"/>
+    <rect class="art-bg art-line" x="96" y="44" width="190" height="260" rx="10"/>
+  </g>
+  <rect class="art-ink" x="118" y="34" width="190" height="260" rx="10" transform="translate(6 6)"/>
+  <rect class="art-paper art-line" x="118" y="34" width="190" height="260" rx="10"/>
+  <text class="art-text" x="136" y="78" font-size="26">Mati Mati</text>
+  <rect class="art-ink" x="136" y="90" width="154" height="3"/>
+  <rect class="art-solid art-line" x="136" y="106" width="154" height="92" rx="8"/>
+  <path class="art-paper art-line" d="M213 126l8 16 18 3-13 12 3 18-16-8-16 8 3-18-13-12 18-3z"/>
+  <rect class="art-ink" x="136" y="212" width="130" height="10" rx="5"/>
+  <rect class="art-ink" x="136" y="230" width="100" height="10" rx="5"/>
+  <rect class="art-soft" x="136" y="252" width="154" height="6" rx="3"/>
+  <rect class="art-soft" x="136" y="266" width="120" height="6" rx="3"/>
+  <g transform="translate(262 212) rotate(10)">
+    <rect class="art-ink" x="3" y="3" width="76" height="40" rx="12"/>
+    <rect class="art-accent art-line" width="76" height="40" rx="12"/>
+    <rect class="art-ink" x="14" y="12" width="48" height="6" rx="3"/>
+    <rect class="art-ink" x="14" y="23" width="32" height="6" rx="3"/>
+  </g>
+{%- elif art == "verbs" %}
+  <rect class="art-ink" x="70" y="40" width="260" height="56" rx="14" transform="translate(6 6)"/>
+  <rect class="art-paper art-line" x="70" y="40" width="260" height="56" rx="14"/>
+  <rect class="art-ink" x="92" y="62" width="110" height="12" rx="6"/>
+  <rect class="art-solid" x="210" y="56" width="4" height="24"/>
+  <circle class="art-solid art-line" cx="300" cy="68" r="16"/>
+  <path class="art-line art-nofill" d="M293 68h14m-6-6 6 6-6 6" style="stroke: var(--mati-blanco)"/>
+  {%- for row in range(3) %}
+  {%- set y = 124 + row * 64 %}
+  <rect class="art-ink" x="70" y="{{ y }}" width="260" height="50" rx="12" transform="translate(5 5)"/>
+  <rect class="{{ 'art-bg' if row != 1 else 'art-paper' }} art-line" x="70" y="{{ y }}" width="260" height="50" rx="12"/>
+  <rect class="art-solid" x="86" y="{{ y + 15 }}" width="{{ [34, 26, 42][row] }}" height="20" rx="10"/>
+  <rect class="art-ink" x="{{ 86 + [34, 26, 42][row] + 4 }}" y="{{ y + 18 }}" width="{{ [70, 86, 60][row] }}" height="14" rx="7"/>
+  <rect class="art-accent" x="{{ 86 + [34, 26, 42][row] + [70, 86, 60][row] + 8 }}" y="{{ y + 18 }}" width="{{ [26, 20, 30][row] }}" height="14" rx="7"/>
+  <rect class="art-soft" x="252" y="{{ y + 19 }}" width="60" height="12" rx="6"/>
+  {%- endfor %}
+{%- else %}
+  <path class="art-ink" d="M200 312s-118-64-118-150c0-46 34-74 70-74 22 0 40 12 48 30 8-18 26-30 48-30 36 0 70 28 70 74 0 86-118 150-118 150z" transform="translate(7 7)"/>
+  <path class="art-solid art-line" d="M200 312s-118-64-118-150c0-46 34-74 70-74 22 0 40 12 48 30 8-18 26-30 48-30 36 0 70 28 70 74 0 86-118 150-118 150z"/>
+  <path class="art-paper art-line" d="M200 150l12 24 27 4-20 19 5 27-24-13-24 13 5-27-20-19 27-4z"/>
+{%- endif %}
+</svg>

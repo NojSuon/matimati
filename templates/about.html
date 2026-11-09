@@ -6,11 +6,11 @@
 <section class="section" aria-label="{{ t.about.mission_title }}">
   <div class="wrap">
     <div class="statement-grid">
-      <div class="statement" data-serie="mati">
+      <div class="box" data-serie="mati">
         <h2>{{ t.about.mission_title }}</h2>
         <p>{{ t.about.mission }}</p>
       </div>
-      <div class="statement" data-serie="mar">
+      <div class="box" data-serie="mar">
         <h2>{{ t.about.vision_title }}</h2>
         <p>{{ t.about.vision }}</p>
       </div>
@@ -34,5 +34,5 @@
   </div>
 </section>
 
-{{ m.support_cta(t, site, links) }}
+{{ m.support_band(t, site, links) }}
 {% endblock %}

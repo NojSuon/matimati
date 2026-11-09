@@ -11,6 +11,8 @@ pulldown-cmark = { version = "0.12", default-features = false, features = ["html
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
 tiny_http = "0.12"
+ureq = { version = "2", features = ["json"] }
+serde_json = "1"
 
 [profile.release]
 opt-level = "s"

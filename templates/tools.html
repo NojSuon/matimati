@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% import "partials/macros.html" as m %}
 {% block main %}
-{{ m.page_hero(t.tools.tag, t.tools.title, t.tools.lead, 'p02') }}
+{{ m.page_hero(t.tools.tag, t.tools.title, t.tools.lead) }}
 
 <section class="section" aria-labelledby="tools-list">
   <div class="wrap">
     <h2 id="tools-list" class="visually-hidden">{{ t.tools.title }}</h2>
-    <div class="tool-grid">
-      {%- for tool in tools %}{{ m.tool_card(tool, t) }}{% endfor %}
-      <article class="tool-card tool-card--soon" data-serie="noche">
+    <div class="project-grid">
+      {%- for p in projects if p.tool %}{{ m.project_card(p, t) }}{% endfor %}
+      <article class="project-card project-card--soon">
         <h3><a href="{{ links.contact }}">{{ t.tools.soon_title }}</a></h3>
         <p>{{ t.tools.soon_text }}</p>
-        <span class="tool-card__go" aria-hidden="true">{{ t.nav.contact }} →</span>
+        <span class="project-card__go" aria-hidden="true">{{ t.nav.contact }} →</span>
       </article>
     </div>
   </div>

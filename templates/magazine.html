@@ -20,9 +20,9 @@
     </div>
     {%- endif %}
     {%- if articles %}
-    <div class="article-grid" data-articles>
-      {%- for a in articles %}{{ m.article_card(a, t) }}{% endfor %}
-    </div>
+    <ul class="headlines" data-articles>
+      {%- for a in articles %}<li data-tags="{{ a.tags | join('|') }}">{{ m.headline(a, t) }}</li>{% endfor %}
+    </ul>
     {%- else %}
     <p class="empty">{{ t.magazine.empty }}</p>
     {%- endif %}

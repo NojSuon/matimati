@@ -1,23 +1,26 @@
 {% extends "base.html" %}
 {% import "partials/macros.html" as m %}
 {% block main %}
-{{ m.page_hero(t.support.tag, t.support.title, t.support.lead, 'p05') }}
+{{ m.page_hero(t.support.tag, t.support.title, t.support.lead) }}
 
 <section class="section">
   <div class="wrap">
-    <div class="donate-card">
-      <div>
+    <div class="band">
+      <div class="band__text">
         <h2>{{ t.support.donate_title }}</h2>
         <p>{{ t.support.donate_text }}</p>
+        <div class="band__actions">
+          <a class="button button--kofi" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+        </div>
       </div>
-      <a class="button button--kofi button--big" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+      <div class="band__art patron" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap two-cols">
-    <div class="card">
+    <div class="box box--plain">
       <h2>{{ t.support.uses_title }}</h2>
       <ul class="check-list">
         <li>{{ t.support.use_1 }}</li>
@@ -25,7 +28,7 @@
         <li>{{ t.support.use_3 }}</li>
       </ul>
     </div>
-    <div class="card" data-serie="milpa">
+    <div class="box box--plain" data-serie="milpa">
       <h2>{{ t.support.other_title }}</h2>
       <ul class="check-list">
         <li>{{ t.support.other_1 }}</li>

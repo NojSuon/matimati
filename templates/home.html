@@ -1,48 +1,65 @@
 {% extends "base.html" %}
 {% import "partials/macros.html" as m %}
 {% block main %}
-<section class="hero" aria-labelledby="hero-title">
-  <div class="pattern-strip pattern-p01" aria-hidden="true"></div>
-  <div class="wrap">
-    <div>
-      <span class="tag">{{ t.home.tag }}</span>
-      <h1 id="hero-title">{{ t.home.title }}</h1>
-      <p>{{ t.home.lead }}</p>
-      <p class="hero-actions">
-        <a class="button button--light" href="{{ links.magazine }}">{{ t.home.cta_primary }} →</a>
-        <a class="button button--outline-light" href="{{ links.tools }}">{{ t.home.cta_secondary }}</a>
-      </p>
-    </div>
-    <img class="hero-logo" src="{{ base }}static/img/mati-logo-textil.png" width="300" height="300" alt="{{ t.common.logo_alt }}">
-  </div>
-</section>
+<h1 class="visually-hidden">{{ site.name }}: {{ t.home.title }}</h1>
 
-<section class="intro" aria-labelledby="intro-title">
-  <div class="wrap">
-    <div class="intro-card">
-      <div>
-        <h2 id="intro-title">{{ t.home.intro_title }}</h2>
-        <p>{{ t.home.intro_1 }}</p>
-        <p>{{ t.home.intro_2 }}</p>
+{#- 1 · Projects carousel. Without JavaScript it is a row you can scroll;
+    site.js adds the arrows, dots and auto-play (paused on hover/focus,
+    off with reduced motion). #}
+<section class="carousel wrap" aria-roledescription="carousel" aria-label="{{ t.carousel.label }}" data-carousel
+         data-label-pause="{{ t.carousel.pause }}" data-label-play="{{ t.carousel.play }}">
+  <div class="carousel__viewport" data-viewport tabindex="0">
+    {%- for p in projects %}
+    <article class="slide" aria-roledescription="slide" aria-label="{{ t.carousel.slide | replace('{n}', loop.index) | replace('{total}', projects | length) }}"{% if p.serie %} data-serie="{{ p.serie }}"{% endif %}>
+      <div class="slide__text">
+        <span class="tag">{{ p.tag }}</span>
+        <h2>{{ p.name }}</h2>
+        <p>{{ p.description }}</p>
+        <div class="slide__actions">
+          <a class="button" href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.button }} →{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a>
+          <a class="button button--line" href="{{ links.about }}">{{ t.home.about_button }}</a>
+        </div>
       </div>
-      <ul class="pillars">
-        <li><a href="{{ links.magazine }}"><strong>{{ t.home.pillar_1_title }}</strong>{{ t.home.pillar_1 }}</a></li>
-        <li><a href="{{ links.tools }}"><strong>{{ t.home.pillar_2_title }}</strong>{{ t.home.pillar_2 }}</a></li>
-        <li><a href="{{ links.support }}"><strong>{{ t.home.pillar_3_title }}</strong>{{ t.home.pillar_3 }}</a></li>
-      </ul>
+      <div class="slide__art patron">
+        {%- with art = p.art %}{% include "partials/art.html" %}{% endwith %}
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+  {%- if projects | length > 1 %}
+  <div class="carousel__controls" data-controls hidden>
+    <div class="carousel__dots">
+      {%- for p in projects %}
+      <button type="button" class="carousel__dot" data-dot="{{ loop.index0 }}" aria-label="{{ p.name }}"{% if loop.first %} aria-current="true"{% endif %}></button>
+      {%- endfor %}
+    </div>
+    <div class="carousel__buttons">
+      <button type="button" data-pause aria-label="{{ t.carousel.pause }}" title="{{ t.carousel.pause }}">❚❚</button>
+      <button type="button" data-prev aria-label="{{ t.carousel.prev }}" title="{{ t.carousel.prev }}">←</button>
+      <button type="button" data-next aria-label="{{ t.carousel.next }}" title="{{ t.carousel.next }}">→</button>
     </div>
   </div>
+  {%- endif %}
 </section>
 
-<section class="section" aria-labelledby="latest-title">
+{#- 2 · News: the latest article big, the next ones as headlines. #}
+<section class="section" aria-labelledby="news-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="latest-title">{{ t.home.latest_title }}</h2>
+      <div>
+        <h2 id="news-title">{{ t.home.news_title }}</h2>
+        <p>{{ t.home.news_lead }}</p>
+      </div>
       {%- if articles %}<a class="link-more" href="{{ links.magazine }}">{{ t.common.all_articles }} →</a>{% endif %}
     </div>
     {%- if articles %}
-    <div class="article-grid">
-      {%- for a in articles %}{{ m.article_card(a, t) }}{% endfor %}
+    <div class="news">
+      {{ m.feature(articles[0], t) }}
+      {%- if articles | length > 1 %}
+      <ul class="headlines">
+        {%- for a in articles[1:] %}<li>{{ m.headline(a, t) }}</li>{% endfor %}
+      </ul>
+      {%- endif %}
     </div>
     {%- else %}
     <p class="empty">{{ t.magazine.empty }}</p>
@@ -50,44 +67,60 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="tools-title">
+{#- 3 · Instagram, updated automatically every day. #}
+<section class="section" id="instagram" aria-labelledby="ig-title">
   <div class="wrap">
     <div class="section-head">
       <div>
-        <h2 id="tools-title">{{ t.home.tools_title }}</h2>
-        <p class="caption">{{ t.home.tools_lead }}</p>
+        <h2 id="ig-title">{{ t.instagram.title }}</h2>
+        <p>{{ t.instagram.lead }}</p>
       </div>
+      <a class="link-more" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.instagram.follow | replace("{handle}", site.instagram) }} →<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
     </div>
-    <div class="tool-grid">
-      {%- for tool in tools %}{{ m.tool_card(tool, t) }}{% endfor %}
+    {%- if posts %}
+    <ul class="ig-grid">
+      {%- for post in posts %}
+      <li>
+        <a class="ig-post" href="{{ post.url }}" target="_blank" rel="noopener">
+          {%- if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.caption or t.instagram.image_alt }}" loading="lazy" width="400" height="400">
+          {%- else %}
+          <div class="cover patron" aria-hidden="true"><span>@</span></div>
+          {%- endif %}
+          {%- if post.kind != "image" %}<span class="ig-post__kind">{{ t.instagram[post.kind] }}</span>{% endif %}
+          <span class="ig-post__text">
+            {{ post.caption or ("@" ~ site.instagram) }}
+            {%- if post.date_human %}<time datetime="{{ post.date }}">{{ post.date_human }}</time>{% endif %}
+            <span class="visually-hidden"> {{ t.common.new_tab }}</span>
+          </span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <div class="ig-empty patron">
+      <p class="box box--plain">{{ t.instagram.empty }}</p>
     </div>
+    {%- endif %}
   </div>
 </section>
 
-<section class="section instagram" aria-labelledby="ig-title" data-serie="jacaranda">
+{#- 4 · Everything Mati Mati does. #}
+<section class="section" aria-labelledby="projects-title">
   <div class="wrap">
-    <div class="instagram-card">
-      <div class="section-head">
-        <div>
-          <h2 id="ig-title">{{ t.instagram.title }}</h2>
-          <p>{{ t.instagram.lead }}</p>
-        </div>
-        <a class="button" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.instagram.follow | replace("{handle}", site.instagram) }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+    <div class="section-head">
+      <div>
+        <h2 id="projects-title">{{ t.home.projects_title }}</h2>
+        <p>{{ t.home.projects_lead }}</p>
       </div>
-      {%- if instagram.posts %}
-      <div class="instagram-grid" data-instagram>
-        {%- for post in instagram.posts %}
-        <blockquote class="instagram-media" data-instgrm-permalink="{{ post.url }}" data-instgrm-version="14">
-          <a href="{{ post.url }}" target="_blank" rel="noopener">{{ post.caption or ("@" ~ site.instagram) }}</a>
-        </blockquote>
-        {%- endfor %}
-      </div>
-      {%- else %}
-      <p class="caption">{{ t.instagram.empty }}</p>
-      {%- endif %}
+      <a class="link-more" href="{{ links.about }}">{{ t.home.about_button }} →</a>
+    </div>
+    <div class="project-grid">
+      {%- for p in projects %}{{ m.project_card(p, t) }}{% endfor %}
     </div>
   </div>
 </section>
 
-{{ m.support_cta(t, site, links) }}
+{#- 5 · Support. #}
+{{ m.support_band(t, site, links) }}
 {% endblock %}

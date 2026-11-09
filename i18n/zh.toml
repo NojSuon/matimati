@@ -19,6 +19,9 @@ support = "support"
 contact = "contact"
 
 [nav]
+topics = "主题"
+more = "更多"
+follow = "关注我们"
 label = "主菜单"
 home = "首页"
 magazine = "杂志"
@@ -38,6 +41,11 @@ all_articles = "查看全部文章"
 logo_alt = "Mati Mati 标志：四种织物图案上的字母 MA 和 TI。"
 
 [home]
+about_button = "关于我们"
+news_title = "最新文章"
+news_lead = "来自 Mati Mati 杂志的文章。"
+projects_title = "我们的项目"
+projects_lead = "Mati Mati 所做的一切，免费且开放。"
 description = "Mati Mati 是一个学习、保护和传播原住民语言的社区。阅读我们的杂志，使用我们的工具，加入我们。"
 tag = "原住民语言社区"
 title = "每一种语言都是看世界的一种方式"
@@ -58,10 +66,13 @@ tools_title = "工具"
 tools_lead = "按自己的节奏练习，免费，无需注册。"
 
 [instagram]
+image_alt = "Mati Mati 的 Instagram 帖子"
+video = "视频"
+carousel = "多图"
 title = "在 Instagram 上关注我们"
-lead = "每日一词、小知识和图文帖子，每周学一点。"
+lead = "@matidemati 的最新内容，每天更新。"
 follow = "在 Instagram 上查看 @{handle}"
-empty = "我们的帖子很快会出现在这里。现在可以先去 Instagram 看看。"
+empty = "我们的 Instagram 帖子会显示在这里。现在可以先去 @matidemati 看看。"
 
 [magazine]
 title = "杂志"
@@ -151,6 +162,8 @@ topic_2 = "更正某个信息或词汇。"
 topic_3 = "以母语者、教师或机构的身份合作。"
 
 [footer]
+explore = "浏览"
+follow = "关注我们"
 about = "学习、保护和传播原住民语言的社区。"
 rss = "RSS"
 rights = "Mati Mati"
@@ -162,3 +175,19 @@ home = "返回首页"
 
 [ads]
 label = "广告"
+
+[theme]
+to_dark = "切换到深色模式"
+to_light = "切换到浅色模式"
+
+[palette]
+label = "今日配色"
+names = { mati = "Mati", mar = "海洋", milpa = "玉米田", jacaranda = "蓝花楹", fiesta = "节日", anil = "靛蓝", barro = "陶土", noche = "夜晚" }
+
+[carousel]
+label = "Mati Mati 的项目"
+slide = "第 {n} 个，共 {total} 个"
+prev = "上一个项目"
+next = "下一个项目"
+pause = "暂停轮播"
+play = "继续轮播"

@@ -19,6 +19,9 @@ support = "apoya"
 contact = "contacto"
 
 [nav]
+topics = "Temas"
+more = "Más"
+follow = "Síguenos"
 label = "Menú principal"
 home = "Inicio"
 magazine = "Revista"
@@ -38,6 +41,11 @@ all_articles = "Ver todos los artículos"
 logo_alt = "Logotipo de Mati Mati: las letras MA y TI sobre cuatro patrones textiles."
 
 [home]
+about_button = "Nosotros"
+news_title = "Lo más reciente"
+news_lead = "Artículos de la revista Mati Mati."
+projects_title = "Nuestros proyectos"
+projects_lead = "Todo lo que hacemos en Mati Mati, gratis y abierto."
 description = "Mati Mati es una comunidad para aprender, preservar y difundir lenguas indígenas. Lee nuestra revista, usa nuestras herramientas y súmate."
 tag = "Comunidad de lenguas indígenas"
 title = "Cada lengua es una forma de ver el mundo"
@@ -58,10 +66,13 @@ tools_title = "Herramientas"
 tools_lead = "Para practicar a tu ritmo, gratis y sin crear cuenta."
 
 [instagram]
+image_alt = "Publicación de Mati Mati en Instagram"
+video = "Video"
+carousel = "Carrusel"
 title = "Síguenos en Instagram"
-lead = "Palabras del día, datos y carruseles para aprender un poco cada semana."
+lead = "Lo último de @matidemati, actualizado cada día."
 follow = "Ver @{handle} en Instagram"
-empty = "Pronto verás aquí nuestras publicaciones. Mientras, visítanos en Instagram."
+empty = "Aquí aparecerán nuestras publicaciones de Instagram. Mientras, visítanos en @matidemati."
 
 [magazine]
 title = "Revista"
@@ -151,6 +162,8 @@ topic_2 = "Corregir un dato o una palabra."
 topic_3 = "Colaborar como hablante, docente o institución."
 
 [footer]
+explore = "Explora"
+follow = "Síguenos"
 about = "Comunidad para aprender, preservar y difundir lenguas indígenas."
 rss = "RSS"
 rights = "Mati Mati"
@@ -162,3 +175,19 @@ home = "Ir al inicio"
 
 [ads]
 label = "Publicidad"
+
+[theme]
+to_dark = "Activar modo oscuro"
+to_light = "Activar modo claro"
+
+[palette]
+label = "Paleta del día"
+names = { mati = "Mati", mar = "Mar", milpa = "Milpa", jacaranda = "Jacaranda", fiesta = "Fiesta", anil = "Añil", barro = "Barro", noche = "Noche" }
+
+[carousel]
+label = "Proyectos de Mati Mati"
+slide = "{n} de {total}"
+prev = "Proyecto anterior"
+next = "Proyecto siguiente"
+pause = "Pausar el carrusel"
+play = "Reanudar el carrusel"

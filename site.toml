@@ -27,25 +27,80 @@ enabled = false
 client = ""   # "ca-pub-…"
 slot = ""
 
-# Mati Mati tools, shown on the home page and on /herramientas/.
-[[tools]]
+# Mati Mati projects: the slides of the home carousel, in this order.
+# Each one links to its own site (url) or to a page of this site (page).
+# tool = true also lists it on the tools page. serie: a fixed colour series
+# (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche); left out, the
+# slide takes the palette of the day. art: phone, magazine, verbs, heart.
+
+[[projects]]
+id = "revista"
+page = "magazine"
+art = "magazine"
+
+[projects.text.es]
+name = "Revista Mati Mati"
+tag = "Proyecto"
+description = "Palabras, historias y conceptos para conocer mejor las lenguas indígenas, explicados con calma."
+button = "Lee la revista"
+
+[projects.text.en]
+name = "Mati Mati Magazine"
+tag = "Project"
+description = "Words, stories and ideas to get to know Indigenous languages better, explained at an easy pace."
+button = "Read the magazine"
+
+[projects.text.zh]
+name = "Mati Mati 杂志"
+tag = "项目"
+description = "通过词汇、故事和概念，从容地了解原住民语言。"
+button = "阅读杂志"
+
+[[projects]]
 id = "conjugador"
 url = "https://nojsuon.github.io/coniugatio/"
-serie = "mar"
+art = "verbs"
+tool = true
 
-[tools.text.es]
+[projects.text.es]
 name = "Conjugador"
-tag = "Lenguas de México"
+tag = "Herramienta"
 description = "Elige una lengua, escribe un verbo y mira cómo cambia con cada persona y cada tiempo."
+button = "Abre el conjugador"
 
-[tools.text.en]
+[projects.text.en]
 name = "Verb conjugator"
-tag = "Languages of Mexico"
+tag = "Tool"
 description = "Pick a language, type a verb and see how it changes with each person and tense."
+button = "Open the conjugator"
 url = "https://nojsuon.github.io/coniugatio/en/"
 
-[tools.text.zh]
+[projects.text.zh]
 name = "动词变位工具"
-tag = "墨西哥的语言"
+tag = "工具"
 description = "选择一种语言，输入一个动词，看看它如何随人称和时态变化。"
+button = "打开变位工具"
 url = "https://nojsuon.github.io/coniugatio/zh/"
+
+[[projects]]
+id = "instagram"
+url = "https://www.instagram.com/matidemati/"
+art = "phone"
+
+[projects.text.es]
+name = "@matidemati"
+tag = "Comunidad"
+description = "Palabras del día, datos y carruseles en Instagram para aprender un poco cada semana."
+button = "Síguenos en Instagram"
+
+[projects.text.en]
+name = "@matidemati"
+tag = "Community"
+description = "Words of the day, facts and carousels on Instagram to learn a little every week."
+button = "Follow us on Instagram"
+
+[projects.text.zh]
+name = "@matidemati"
+tag = "社区"
+description = "在 Instagram 上看每日一词、小知识和图文帖子，每周学一点。"
+button = "在 Instagram 上关注我们"

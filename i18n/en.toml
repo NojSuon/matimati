@@ -17,6 +17,9 @@ support = "support"
 contact = "contact"
 
 [nav]
+topics = "Topics"
+more = "More"
+follow = "Follow us"
 label = "Main menu"
 home = "Home"
 magazine = "Magazine"
@@ -36,6 +39,11 @@ all_articles = "See all articles"
 logo_alt = "Mati Mati logo: the letters MA and TI over four textile patterns."
 
 [home]
+about_button = "About us"
+news_title = "Latest"
+news_lead = "Articles from the Mati Mati magazine."
+projects_title = "Our projects"
+projects_lead = "Everything we do at Mati Mati, free and open."
 description = "Mati Mati is a community to learn, preserve and share Indigenous languages. Read our magazine, use our tools and join us."
 tag = "Indigenous languages community"
 title = "Every language is a way of seeing the world"
@@ -56,10 +64,13 @@ tools_title = "Tools"
 tools_lead = "Practice at your own pace, free and with no account."
 
 [instagram]
+image_alt = "Mati Mati post on Instagram"
+video = "Video"
+carousel = "Carousel"
 title = "Follow us on Instagram"
-lead = "Words of the day, facts and carousels to learn a little every week."
+lead = "The latest from @matidemati, updated every day."
 follow = "See @{handle} on Instagram"
-empty = "Our posts will show up here soon. Meanwhile, visit us on Instagram."
+empty = "Our Instagram posts will appear here. Meanwhile, visit us at @matidemati."
 
 [magazine]
 title = "Magazine"
@@ -149,6 +160,8 @@ topic_2 = "Correct a fact or a word."
 topic_3 = "Collaborate as a speaker, teacher or institution."
 
 [footer]
+explore = "Explore"
+follow = "Follow us"
 about = "A community to learn, preserve and share Indigenous languages."
 rss = "RSS"
 rights = "Mati Mati"
@@ -160,3 +173,19 @@ home = "Go to the home page"
 
 [ads]
 label = "Advertisement"
+
+[theme]
+to_dark = "Switch to dark mode"
+to_light = "Switch to light mode"
+
+[palette]
+label = "Palette of the day"
+names = { mati = "Mati", mar = "Sea", milpa = "Milpa", jacaranda = "Jacaranda", fiesta = "Fiesta", anil = "Indigo", barro = "Clay", noche = "Night" }
+
+[carousel]
+label = "Mati Mati projects"
+slide = "{n} of {total}"
+prev = "Previous project"
+next = "Next project"
+pause = "Pause the carousel"
+play = "Resume the carousel"

@@ -1,57 +1,71 @@
 {#- Pieces used on several pages. -#}
 
-{% macro article_card(a, t) -%}
-<article class="article-card" data-serie="{{ a.serie }}" data-tags="{{ a.tags | join('|') }}">
-  {%- if a.image %}
-  <img class="article-card__image" src="{{ a.image }}" alt="{{ a.image_alt }}" loading="lazy">
-  {%- else %}
-  <div class="pattern-{{ a.pattern }} article-card__strip" aria-hidden="true"></div>
-  {%- endif %}
-  <div class="article-card__body">
-    {%- if a.tags %}
-    <ul class="tag-list" aria-label="{{ t.article.tags }}">
-      {%- for tag in a.tags %}<li class="tag tag--suave">{{ tag }}</li>{% endfor %}
-    </ul>
-    {%- endif %}
+{#- Picture of an article: its photo, or the pattern in its series with "MM". -#}
+{% macro media(a) -%}
+{%- if a.image %}
+<img src="{{ a.image }}" alt="{{ a.image_alt }}" loading="lazy">
+{%- else %}
+<div class="cover patron" aria-hidden="true"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}><span>MM</span></div>
+{%- endif %}
+{%- endmacro %}
+
+{% macro feature(a, t) -%}
+<article class="feature" data-tags="{{ a.tags | join('|') }}"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}>
+  <div class="feature__media">{{ media(a) }}</div>
+  {%- if a.tags %}<span class="kicker">{{ a.tags | join(' · ') }}</span>{% endif %}
+  <h3><a href="{{ a.href }}">{{ a.title }}</a></h3>
+  <p>{{ a.description }}</p>
+  <p class="meta"><time datetime="{{ a.date }}">{{ a.date_human }}</time> · {{ a.reading_minutes }} {{ t.common.minutes }}</p>
+</article>
+{%- endmacro %}
+
+{% macro headline(a, t) -%}
+<article class="headline" data-tags="{{ a.tags | join('|') }}"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}>
+  <div>
+    {%- if a.tags %}<span class="kicker">{{ a.tags | join(' · ') }}</span>{% endif %}
     <h3><a href="{{ a.href }}">{{ a.title }}</a></h3>
     <p>{{ a.description }}</p>
     <p class="meta"><time datetime="{{ a.date }}">{{ a.date_human }}</time> · {{ a.reading_minutes }} {{ t.common.minutes }}</p>
   </div>
+  <div class="headline__thumb">{{ media(a) }}</div>
 </article>
 {%- endmacro %}
 
-{% macro tool_card(tool, t) -%}
-<article class="tool-card" data-serie="{{ tool.serie }}">
-  {%- if tool.tag %}<span class="tag">{{ tool.tag }}</span>{% endif %}
-  <h3><a href="{{ tool.url }}">{{ tool.name }}</a></h3>
-  <p>{{ tool.description }}</p>
-  <span class="tool-card__go" aria-hidden="true">{{ t.tools.open }} →</span>
+{% macro project_card(p, t) -%}
+<article class="project-card"{% if p.serie %} data-serie="{{ p.serie }}"{% endif %}>
+  {%- if p.tag %}<span class="tag">{{ p.tag }}</span>{% endif %}
+  <h3><a href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.name }}{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a></h3>
+  <p>{{ p.description }}</p>
+  <span class="project-card__go" aria-hidden="true">{{ p.button }} →</span>
 </article>
 {%- endmacro %}
 
-{% macro page_hero(tag, title, lead, pattern='p01') -%}
+{% macro page_hero(tag, title, lead) -%}
 <section class="page-hero">
-  <div class="pattern-strip pattern-{{ pattern }}" aria-hidden="true"></div>
   <div class="wrap">
-    <span class="tag">{{ tag }}</span>
-    <h1>{{ title }}</h1>
-    {%- if lead %}<p class="lead">{{ lead }}</p>{% endif %}
+    <div class="page-hero__text">
+      <span class="tag">{{ tag }}</span>
+      <h1>{{ title }}</h1>
+      {%- if lead %}<p class="lead">{{ lead }}</p>{% endif %}
+    </div>
+    <div class="page-hero__art patron" aria-hidden="true"></div>
   </div>
 </section>
 {%- endmacro %}
 
-{% macro support_cta(t, site, links, title=none, text=none) -%}
-<section class="cta" aria-labelledby="cta-support">
+{% macro support_band(t, site, links, title=none, text=none) -%}
+<section class="section" aria-labelledby="cta-support">
   <div class="wrap">
-    <div class="cta-card">
-      <div>
+    <div class="band">
+      <div class="band__text">
         <h2 id="cta-support">{{ title or t.support.donate_title }}</h2>
         <p>{{ text or t.support.lead }}</p>
+        <div class="band__actions">
+          <a class="button button--kofi" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+          <a class="button button--line" href="{{ links.support }}">{{ t.support.other_title }}</a>
+        </div>
       </div>
-      <div class="cta-actions">
-        <a class="button button--kofi" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.support.donate_button }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
-        <a class="button button--ghost" href="{{ links.support }}">{{ t.support.other_title }}</a>
-      </div>
+      <div class="band__art patron" aria-hidden="true"></div>
     </div>
   </div>
 </section>
