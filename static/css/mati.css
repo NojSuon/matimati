@@ -318,7 +318,12 @@ p { margin: 0; max-width: 65ch; }
   display: flex; align-items: flex-end;
 }
 /* Low-poly illustration on the right, text panel on the left. */
-.slide__image { position: absolute; top: 28px; right: 32px; bottom: 76px; width: 60%; height: auto; max-height: calc(100% - 104px); object-fit: contain; object-position: right center; }
+/* Fills the area right of the text panel, whole and centred (never cropped). */
+.slide__image {
+  position: absolute; top: 28px; right: 32px; bottom: 76px; left: 46%;
+  width: calc(54% - 32px); height: calc(100% - 104px);
+  object-fit: contain; object-position: center;
+}
 .slide__panel {
   position: relative; margin: 24px 24px 84px; max-width: 520px;
   padding: 24px 28px; border-radius: var(--r);
@@ -518,10 +523,14 @@ p { margin: 0; max-width: 65ch; }
 .ad-slot__label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
 
 /* ---------- Small screens ---------- */
-@media (max-width: 820px) {
+/* Carousel: art on top, text below, wherever the two would not fit side by side. */
+@media (max-width: 1100px) {
   .slide { min-height: 0; flex-direction: column; align-items: stretch; }
-  .slide__image { position: relative; inset: auto; width: 100%; max-height: none; height: auto; aspect-ratio: 16 / 10; padding: 16px 16px 0; object-position: center; }
+  .slide__image { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 16 / 10; padding: 16px 16px 0; }
   .slide__panel { margin: 0; max-width: none; border-radius: 0; box-shadow: none; border: 0; padding: 20px 20px 76px; }
+  .slide__image { max-height: 52vh; object-fit: contain; }
+}
+@media (max-width: 820px) {
   .news { grid-template-columns: 1fr; }
   .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .band { grid-template-columns: 1fr; }
