@@ -18,7 +18,7 @@ A small Rust program turns the content into static HTML for GitHub Pages:
 | `static/` | CSS (brand tokens), JavaScript, images |
 | `src/main.rs` | The generator |
 
-It also publishes an RSS feed per language (`/feed.xml`, `/en/feed.xml`, `/zh/feed.xml`), plus `sitemap.xml` and `robots.txt`.
+It also publishes an RSS feed per language (`/feed.xml`, `/en/feed.xml`, `/zh/feed.xml`; not linked on the pages, kept for the newsletter), plus `sitemap.xml` and `robots.txt`.
 
 ## Write an article
 
@@ -71,7 +71,15 @@ To preview the grid without a token, point `INSTAGRAM_FIXTURE` at a saved API an
 - **HUD style** (as in Chinamitl and the conjugator): a floating header of frosted pill panels, pill buttons with soft shadows, hairline borders and rounded cards (28 / 44 px).
 - **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette. Only in small blocks, never under text (§06).
 - **Textile logo:** only on the about page hero, on a plain background (§03). Header and footer use the simple monogram.
-- **Home carousel:** the `[[projects]]` in `site.toml`, in order. Each shows its `image`: a screenshot in `static/img/proyectos/` (JPEG, 1440 px wide, 16:10), or `"instagram"` for the latest Instagram post. To refresh a screenshot, replace the file.
+- **Home carousel:** the `[[projects]]` in `site.toml`, in order. Each shows its `image`: a low-poly illustration in `static/img/proyectos/` (SVG, 16:10).
+
+## Low-poly illustrations
+
+`tools/lowpoly/` draws them with a tiny 3D renderer (no dependencies): each scene is built from boxes, prisms, cones and faceted spheres in brand colours, shaded by the angle of each facet to the light, and saved as SVG. To change a scene, edit `tools/lowpoly/scenes.mjs` and run:
+
+```bash
+node tools/lowpoly/scenes.mjs
+```
 
 ## Run it locally
 

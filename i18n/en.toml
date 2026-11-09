@@ -29,7 +29,7 @@ contact = "Contact"
 languages = "Site language"
 
 [common]
-screenshot = "{name}: screenshot"
+screenshot = "Illustration of {name}"
 skip = "Skip to content"
 donate = "Donate"
 donate_hidden = "(on Ko-fi, opens in a new tab)"

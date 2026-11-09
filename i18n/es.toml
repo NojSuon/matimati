@@ -31,7 +31,7 @@ contact = "Contacto"
 languages = "Idioma del sitio"
 
 [common]
-screenshot = "{name}: captura de pantalla"
+screenshot = "Ilustración de {name}"
 skip = "Ir al contenido"
 donate = "Dónanos"
 donate_hidden = "(en Ko-fi, se abre en otra pestaña)"

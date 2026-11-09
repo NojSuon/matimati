@@ -31,12 +31,13 @@ slot = ""
 # Each one links to its own site (url) or to a page of this site (page).
 # tool = true also lists it on the tools page. serie: a fixed colour series
 # (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche); left out, the
-# slide takes the palette of the day. image: a screenshot inside static/
-# (img/proyectos/…), or "instagram" for the latest Instagram post.
+# slide takes the palette of the day. image: an illustration inside static/
+# (img/proyectos/…, made by tools/lowpoly/scenes.mjs), or "instagram" for
+# the latest Instagram post.
 
 [[projects]]
 id = "revista"
-image = "img/proyectos/revista.jpg"
+image = "img/proyectos/revista.svg"
 page = "magazine"
 
 [projects.text.es]
@@ -59,7 +60,7 @@ button = "阅读杂志"
 
 [[projects]]
 id = "conjugador"
-image = "img/proyectos/conjugador.jpg"
+image = "img/proyectos/conjugador.svg"
 url = "https://nojsuon.github.io/coniugatio/"
 tool = true
 
@@ -85,7 +86,7 @@ url = "https://nojsuon.github.io/coniugatio/zh/"
 
 [[projects]]
 id = "buul"
-image = "img/proyectos/buul.jpg"
+image = "img/proyectos/buul.svg"
 url = "https://nojsuon.github.io/buul/"
 tool = true
 
@@ -109,7 +110,7 @@ button = "玩 Buul"
 
 [[projects]]
 id = "chinamitl"
-image = "img/proyectos/chinamitl.jpg"
+image = "img/proyectos/chinamitl.svg"
 url = "https://nojsuon.github.io/chinamitl/"
 tool = true
 
@@ -133,7 +134,7 @@ button = "探索奇南帕"
 
 [[projects]]
 id = "instagram"
-image = "instagram"
+image = "img/proyectos/instagram.svg"
 url = "https://www.instagram.com/matidemati/"
 
 [projects.text.es]

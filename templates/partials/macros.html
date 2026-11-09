@@ -33,7 +33,7 @@
 
 {% macro project_card(p, t) -%}
 <article class="project-card">
-  {%- if p.image %}<img class="project-card__image" src="{{ p.image }}" alt="" loading="lazy" width="1440" height="900">{% endif %}
+  {%- if p.image %}<img class="project-card__image" src="{{ p.image }}" alt="" loading="lazy" width="960" height="600">{% endif %}
   {%- if p.tag %}<span class="tag">{{ p.tag }}</span>{% endif %}
   <h3><a href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.name }}{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a></h3>
   <p>{{ p.description }}</p>
@@ -88,7 +88,7 @@
 {%- endmacro %}
 
 {% macro newsletter(site, t, feed) -%}
-{#- Email sign-up once a service is set in site.toml; until then, RSS. -#}
+{#- Email sign-up once a service is set in site.toml; until then, a note. -#}
 <div class="newsletter">
   {%- if site.newsletter.enabled and site.newsletter.action %}
   <form class="newsletter-form" action="{{ site.newsletter.action }}" method="post" target="_blank">
@@ -97,7 +97,6 @@
   </form>
   {%- else %}
   <p>{{ t.magazine.newsletter_soon }}</p>
-  <a class="rss-link" href="{{ feed }}">{{ t.magazine.rss }}</a>
   {%- endif %}
 </div>
 {%- endmacro %}

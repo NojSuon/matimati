@@ -31,7 +31,7 @@ contact = "联系我们"
 languages = "网站语言"
 
 [common]
-screenshot = "{name}：截图"
+screenshot = "{name}的插图"
 skip = "跳到正文"
 donate = "捐助我们"
 donate_hidden = "（在 Ko-fi 上，在新标签页打开）"

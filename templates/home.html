@@ -12,7 +12,7 @@
     {%- for p in projects %}
     <article class="slide" aria-roledescription="slide" aria-label="{{ t.carousel.slide | replace('{n}', loop.index) | replace('{total}', projects | length) }}">
       {%- if p.image %}
-      <img class="slide__image" src="{{ p.image }}" alt="{{ p.image_alt }}" width="1440" height="900"{% if not loop.first %} loading="lazy"{% endif %}>
+      <img class="slide__image" src="{{ p.image }}" alt="{{ p.image_alt }}" width="960" height="600"{% if not loop.first %} loading="lazy"{% endif %}>
       {%- endif %}
       {#- The text floats over the screenshot in a frosted panel, like a HUD. #}
       <div class="slide__panel panel">
