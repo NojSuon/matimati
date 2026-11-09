@@ -11,34 +11,32 @@
   <div class="carousel__viewport" data-viewport tabindex="0">
     {%- for p in projects %}
     <article class="slide" aria-roledescription="slide" aria-label="{{ t.carousel.slide | replace('{n}', loop.index) | replace('{total}', projects | length) }}">
-      <div class="slide__text">
+      {%- if p.image %}
+      <img class="slide__image" src="{{ p.image }}" alt="{{ p.image_alt }}" width="1440" height="900"{% if not loop.first %} loading="lazy"{% endif %}>
+      {%- endif %}
+      {#- The text floats over the screenshot in a frosted panel, like a HUD. #}
+      <div class="slide__panel panel">
         <span class="tag">{{ p.tag }}</span>
         <h2>{{ p.name }}</h2>
         <p>{{ p.description }}</p>
         <div class="slide__actions">
-          <a class="button" href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.button }} →{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a>
-          <a class="button button--line" href="{{ links.about }}">{{ t.home.about_button }}</a>
+          <a class="pill pill--solid" href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.button }} →{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a>
+          <a class="pill pill--soft" href="{{ links.about }}">{{ t.home.about_button }}</a>
         </div>
-      </div>
-      <div class="slide__art">
-        <div class="patron slide__strip" aria-hidden="true"></div>
-        {%- with art = p.art %}{% include "partials/art.html" %}{% endwith %}
       </div>
     </article>
     {%- endfor %}
   </div>
   {%- if projects | length > 1 %}
-  <div class="carousel__controls" data-controls hidden>
+  <div class="carousel__toolbar panel" data-controls hidden>
+    <button type="button" class="pill pill--icon pill--soft" data-prev aria-label="{{ t.carousel.prev }}" title="{{ t.carousel.prev }}">←</button>
     <div class="carousel__dots">
       {%- for p in projects %}
       <button type="button" class="carousel__dot" data-dot="{{ loop.index0 }}" aria-label="{{ p.name }}"{% if loop.first %} aria-current="true"{% endif %}></button>
       {%- endfor %}
     </div>
-    <div class="carousel__buttons">
-      <button type="button" data-pause aria-label="{{ t.carousel.pause }}" title="{{ t.carousel.pause }}">❚❚</button>
-      <button type="button" data-prev aria-label="{{ t.carousel.prev }}" title="{{ t.carousel.prev }}">←</button>
-      <button type="button" data-next aria-label="{{ t.carousel.next }}" title="{{ t.carousel.next }}">→</button>
-    </div>
+    <button type="button" class="pill pill--icon pill--soft" data-next aria-label="{{ t.carousel.next }}" title="{{ t.carousel.next }}">→</button>
+    <button type="button" class="pill pill--icon pill--soft" data-pause aria-label="{{ t.carousel.pause }}" title="{{ t.carousel.pause }}">❚❚</button>
   </div>
   {%- endif %}
 </section>
@@ -51,7 +49,7 @@
         <h2 id="news-title">{{ t.home.news_title }}</h2>
         <p>{{ t.home.news_lead }}</p>
       </div>
-      {%- if articles %}<a class="link-more" href="{{ links.magazine }}">{{ t.common.all_articles }} →</a>{% endif %}
+      {%- if articles %}<a class="pill pill--soft" href="{{ links.magazine }}">{{ t.common.all_articles }} →</a>{% endif %}
     </div>
     {%- if articles %}
     <div class="news">
@@ -76,7 +74,7 @@
         <h2 id="ig-title">{{ t.instagram.title }}</h2>
         <p>{{ t.instagram.lead }}</p>
       </div>
-      <a class="link-more" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.instagram.follow | replace("{handle}", site.instagram) }} →<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+      <a class="pill pill--soft" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.instagram.follow | replace("{handle}", site.instagram) }} →<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
     </div>
     {%- if posts %}
     <ul class="ig-grid">
@@ -86,7 +84,7 @@
           {%- if post.image %}
           <img src="{{ post.image }}" alt="{{ post.caption or t.instagram.image_alt }}" loading="lazy" width="400" height="400">
           {%- else %}
-          <div class="cover" aria-hidden="true"><span>@</span><i class="patron cover__strip"></i></div>
+          <div class="cover" aria-hidden="true"><span>@</span></div>
           {%- endif %}
           {%- if post.kind != "image" %}<span class="ig-post__kind">{{ t.instagram[post.kind] }}</span>{% endif %}
           <span class="ig-post__text">
@@ -100,7 +98,7 @@
     </ul>
     {%- else %}
     <div class="ig-empty">
-      <p class="box box--plain">{{ t.instagram.empty }}</p>
+      <p>{{ t.instagram.empty }}</p>
     </div>
     {%- endif %}
   </div>
@@ -114,7 +112,7 @@
         <h2 id="projects-title">{{ t.home.projects_title }}</h2>
         <p>{{ t.home.projects_lead }}</p>
       </div>
-      <a class="link-more" href="{{ links.about }}">{{ t.home.about_button }} →</a>
+      <a class="pill pill--soft" href="{{ links.about }}">{{ t.home.about_button }} →</a>
     </div>
     <div class="project-grid">
       {%- for p in projects %}{{ m.project_card(p, t) }}{% endfor %}

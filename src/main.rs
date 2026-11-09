@@ -163,9 +163,10 @@ struct Project {
     /// Fixed colour series; empty = the palette of the day.
     #[serde(default)]
     serie: String,
-    /// Illustration in the carousel: "phone", "magazine", "verbs", "heart".
-    #[serde(default = "default_art")]
-    art: String,
+    /// Picture of the project (a screenshot), inside static/, e.g.
+    /// "img/proyectos/buul.jpg". "instagram" = the latest Instagram post.
+    #[serde(default)]
+    image: Option<String>,
     /// Also listed on the tools page.
     #[serde(default)]
     tool: bool,
@@ -186,10 +187,9 @@ struct ProjectText {
     /// Address of this locale's version, if it differs.
     #[serde(default)]
     url: Option<String>,
-}
-
-fn default_art() -> String {
-    "phone".into()
+    /// Description of the picture (default: "<name>: screenshot").
+    #[serde(default)]
+    image_alt: String,
 }
 
 /// The fields of `i18n/<locale>.toml` the generator itself needs. The whole
@@ -603,6 +603,15 @@ impl Site<'_> {
             .collect()
     }
 
+    /// Address of a file inside static/, or a full address as it is.
+    fn static_url(&self, path: &str) -> String {
+        if path.starts_with("http") || path.starts_with('/') {
+            path.to_string()
+        } else {
+            format!("{}static/{path}", self.base)
+        }
+    }
+
     /// Projects in this locale (texts fall back to Spanish).
     fn projects(&self, li: usize) -> Vec<Value> {
         let loc = &self.locales[li];
@@ -619,10 +628,26 @@ impl Site<'_> {
                     }
                     _ => return None,
                 };
+                let image = match p.image.as_deref() {
+                    Some("instagram") => self.instagram.iter().find_map(|post| {
+                        post.image.as_ref().map(|i| self.static_url(i))
+                    }),
+                    Some(path) => Some(self.static_url(path)),
+                    None => None,
+                };
+                let image_alt = if text.image_alt.is_empty() {
+                    loc.strings["common"]["screenshot"]
+                        .as_str()
+                        .unwrap_or("{name}")
+                        .replace("{name}", &text.name)
+                } else {
+                    text.image_alt.clone()
+                };
                 Some(Value::from_serialize(context! {
                     id => p.id,
                     serie => p.serie,
-                    art => p.art,
+                    image => image,
+                    image_alt => image_alt,
                     tool => p.tool,
                     url => url,
                     external => external,
@@ -663,13 +688,7 @@ impl Site<'_> {
         self.instagram
             .iter()
             .map(|p| {
-                let image = p.image.as_ref().map(|i| {
-                    if i.starts_with("http") || i.starts_with('/') {
-                        i.clone()
-                    } else {
-                        format!("{}static/{i}", self.base)
-                    }
-                });
+                let image = p.image.as_ref().map(|i| self.static_url(i));
                 Value::from_serialize(context! {
                     url => p.url,
                     caption => p.caption,

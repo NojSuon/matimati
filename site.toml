@@ -31,13 +31,13 @@ slot = ""
 # Each one links to its own site (url) or to a page of this site (page).
 # tool = true also lists it on the tools page. serie: a fixed colour series
 # (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche); left out, the
-# slide takes the palette of the day. art: phone, magazine, verbs, board,
-# chinampa, heart.
+# slide takes the palette of the day. image: a screenshot inside static/
+# (img/proyectos/…), or "instagram" for the latest Instagram post.
 
 [[projects]]
 id = "revista"
+image = "img/proyectos/revista.jpg"
 page = "magazine"
-art = "magazine"
 
 [projects.text.es]
 name = "Revista Mati Mati"
@@ -59,8 +59,8 @@ button = "阅读杂志"
 
 [[projects]]
 id = "conjugador"
+image = "img/proyectos/conjugador.jpg"
 url = "https://nojsuon.github.io/coniugatio/"
-art = "verbs"
 tool = true
 
 [projects.text.es]
@@ -85,8 +85,8 @@ url = "https://nojsuon.github.io/coniugatio/zh/"
 
 [[projects]]
 id = "buul"
+image = "img/proyectos/buul.jpg"
 url = "https://nojsuon.github.io/buul/"
-art = "board"
 tool = true
 
 [projects.text.es]
@@ -109,8 +109,8 @@ button = "玩 Buul"
 
 [[projects]]
 id = "chinamitl"
+image = "img/proyectos/chinamitl.jpg"
 url = "https://nojsuon.github.io/chinamitl/"
-art = "chinampa"
 tool = true
 
 [projects.text.es]
@@ -133,8 +133,8 @@ button = "探索奇南帕"
 
 [[projects]]
 id = "instagram"
+image = "instagram"
 url = "https://www.instagram.com/matidemati/"
-art = "phone"
 
 [projects.text.es]
 name = "@matidemati"

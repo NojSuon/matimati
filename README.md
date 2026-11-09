@@ -68,9 +68,10 @@ To preview the grid without a token, point `INSTAGRAM_FIXTURE` at a saved API an
 
 - **Palette of the day:** each day the site takes one of the manual's eight colour series (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche), the same for everyone on that date. Preview one with `?paleta=milpa`. One colour family per page (Manual §04): an article with its own `serie` uses it on its own page only; in lists it takes the palette of the day.
 - **Light by default.** Dark mode only when chosen with the moon/sun button (remembered). It uses only brand colours: Tinta background, Grafito surfaces, Hueso text and each series' dark solid.
-- **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette. Used as bands and small blocks, never under text, well under 25 % of a page (§06).
+- **HUD style** (as in Chinamitl and the conjugator): a floating header of frosted pill panels, pill buttons with soft shadows, hairline borders and rounded cards (28 / 44 px).
+- **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette. Only in small blocks, never under text (§06).
 - **Textile logo:** only on the about page hero, on a plain background (§03). Header and footer use the simple monogram.
-- **Home carousel:** the `[[projects]]` in `site.toml`, in order.
+- **Home carousel:** the `[[projects]]` in `site.toml`, in order. Each shows its `image`: a screenshot in `static/img/proyectos/` (JPEG, 1440 px wide, 16:10), or `"instagram"` for the latest Instagram post. To refresh a screenshot, replace the file.
 
 ## Run it locally
 

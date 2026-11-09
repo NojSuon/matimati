@@ -49,75 +49,60 @@
 <body{% if serie %} data-serie="{{ serie }}"{% endif %}>
   <a class="skip-link" href="#contenido">{{ t.common.skip }}</a>
 
-  <header class="site-header">
-    <div class="masthead">
-      <div class="wrap">
-        <a class="brand" href="{{ home }}" {% if page.id == 'home' %}aria-current="page"{% endif %}>
-          {% include "partials/logo.html" %}
-          <span>{{ site.name }}</span>
-        </a>
-        <nav class="site-nav" aria-label="{{ t.nav.label }}">
-          <ul>
-            {%- for item in nav %}
-            <li><a href="{{ item.href }}" {% if item.current or (item.id == 'magazine' and page.id == 'article') %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
-            {%- endfor %}
-          </ul>
+  {#- Floating HUD, like Chinamitl: separate pill panels over the page. #}
+  <header class="hud">
+    <div class="wrap hud__bar">
+      <a class="brand pill pill--panel" href="{{ home }}" {% if page.id == 'home' %}aria-current="page"{% endif %}>
+        {% include "partials/logo.html" %}
+        <span>{{ site.name }}</span>
+      </a>
+      <nav class="pill-group hud__nav" aria-label="{{ t.nav.label }}">
+        <ul>
+          {%- for item in nav %}
+          <li><a href="{{ item.href }}" {% if item.current or (item.id == 'magazine' and page.id == 'article') %}aria-current="page"{% endif %}>{{ item.label }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <div class="hud__end">
+        <button type="button" class="pill pill--panel pill--icon theme-toggle" data-theme-toggle
+                data-label-dark="{{ t.theme.to_dark }}" data-label-light="{{ t.theme.to_light }}"
+                aria-label="{{ t.theme.to_dark }}" title="{{ t.theme.to_dark }}">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <nav class="pill-group langs" aria-label="{{ t.nav.languages }}">
+          {%- for a in alternates %}
+          {%- if a.current %}
+          <span aria-current="true" lang="{{ a.hreflang }}">{{ a.label }}</span>
+          {%- else %}
+          <a href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}" title="{{ a.name }}"><span aria-hidden="true">{{ a.label }}</span><span class="visually-hidden">{{ a.name }}</span></a>
+          {%- endif %}
+          {%- endfor %}
         </nav>
-        <div class="header-end">
-          <button type="button" class="theme-toggle" data-theme-toggle
-                  data-label-dark="{{ t.theme.to_dark }}" data-label-light="{{ t.theme.to_light }}"
-                  aria-label="{{ t.theme.to_dark }}" title="{{ t.theme.to_dark }}">
-            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
-          <nav class="lang-switches" aria-label="{{ t.nav.languages }}">
-            {%- for a in alternates %}
-            {%- if a.current %}
-            <span class="lang-switch" aria-current="true" lang="{{ a.hreflang }}">{{ a.label }}</span>
-            {%- else %}
-            <a class="lang-switch" href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}" title="{{ a.name }}"><span aria-hidden="true">{{ a.label }}</span><span class="visually-hidden">{{ a.name }}</span></a>
-            {%- endif %}
-            {%- endfor %}
-          </nav>
-          <a class="button button--line button--small button--follow" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.nav.follow }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
-          <a class="button button--kofi button--small" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.common.donate }}<span class="visually-hidden"> {{ t.common.donate_hidden }}</span></a>
-        </div>
+        <a class="pill pill--panel hud__follow" href="{{ links.instagram }}" target="_blank" rel="noopener">{{ t.nav.follow }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>
+        <a class="pill pill--kofi" href="{{ site.kofi }}" target="_blank" rel="noopener">{{ t.common.donate }}<span class="visually-hidden"> {{ t.common.donate_hidden }}</span></a>
       </div>
     </div>
-    <nav class="topics" aria-label="{{ t.nav.topics }}">
-      <div class="wrap">
-        <ul>
-          {%- for topic in topics[:4] %}
-          <li><a href="{{ topic.href }}">{{ topic.name }}</a></li>
-          {%- endfor %}
-          {%- if topics | length > 4 %}
-          <li>
-            <details>
-              <summary>{{ t.nav.more }}</summary>
-              <ul>
-                {%- for topic in topics[4:] %}
-                <li><a href="{{ topic.href }}">{{ topic.name }}</a></li>
-                {%- endfor %}
-              </ul>
-            </details>
-          </li>
-          {%- endif %}
-        </ul>
-        <ul>
-          <li><a href="{{ links.tools }}">{{ t.nav.tools }}</a></li>
-          <li><a href="{{ home }}#instagram">Instagram</a></li>
-          <li><a href="{{ links.support }}">{{ t.support.title }}</a></li>
-        </ul>
-      </div>
-    </nav>
   </header>
+
+  <nav class="wrap topics" aria-label="{{ t.nav.topics }}">
+    <ul>
+      {%- for topic in topics %}
+      <li><a class="chip" href="{{ topic.href }}">{{ topic.name }}</a></li>
+      {%- endfor %}
+      <li class="topics__gap" aria-hidden="true"></li>
+      <li><a class="chip chip--soft" href="{{ links.tools }}">{{ t.nav.tools }}</a></li>
+      <li><a class="chip chip--soft" href="{{ home }}#instagram">Instagram</a></li>
+      <li><a class="chip chip--soft" href="{{ links.support }}">{{ t.support.title }}</a></li>
+    </ul>
+  </nav>
 
   <main id="contenido" tabindex="-1">
     {% block main %}{% endblock %}
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
+    <div class="wrap footer-card">
       <div class="footer-brand">
         <a class="brand" href="{{ home }}">
           {% include "partials/logo.html" %}
@@ -146,7 +131,6 @@
         </ul>
       </div>
     </div>
-    <div class="patron patron-strip" aria-hidden="true"></div>
     <div class="wrap footer-bottom">
       <p class="caption">© {{ year }} {{ t.footer.rights }}</p>
       <p class="caption" data-palette data-label="{{ t.palette.label }}" data-names='{{ t.palette.names | tojson }}'></p>
