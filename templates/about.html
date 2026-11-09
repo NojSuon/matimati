@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% import "partials/macros.html" as m %}
 {% block main %}
-{{ m.page_hero(t.about.tag, t.about.title, t.about.lead) }}
+{#- The textile logo is for hero pieces (Manual §03), never on a pattern. #}
+{{ m.page_hero(t.about.tag, t.about.title, t.about.lead, {"src": base ~ "static/img/mati-logo-textil.png", "alt": t.common.logo_alt}) }}
 
 <section class="section" aria-label="{{ t.about.mission_title }}">
   <div class="wrap">
     <div class="statement-grid">
-      <div class="box" data-serie="mati">
+      <div class="box">
         <h2>{{ t.about.mission_title }}</h2>
         <p>{{ t.about.mission }}</p>
       </div>
-      <div class="box" data-serie="mar">
+      <div class="box">
         <h2>{{ t.about.vision_title }}</h2>
         <p>{{ t.about.vision }}</p>
       </div>
@@ -26,10 +27,10 @@
   <div class="wrap">
     <h2 id="values-title">{{ t.about.values_title }}</h2>
     <ul class="value-grid">
-      <li data-serie="mati"><strong>{{ t.about.value_1_title }}</strong>{{ t.about.value_1 }}</li>
-      <li data-serie="milpa"><strong>{{ t.about.value_2_title }}</strong>{{ t.about.value_2 }}</li>
-      <li data-serie="jacaranda"><strong>{{ t.about.value_3_title }}</strong>{{ t.about.value_3 }}</li>
-      <li data-serie="anil"><strong>{{ t.about.value_4_title }}</strong>{{ t.about.value_4 }}</li>
+      <li><strong>{{ t.about.value_1_title }}</strong>{{ t.about.value_1 }}</li>
+      <li><strong>{{ t.about.value_2_title }}</strong>{{ t.about.value_2 }}</li>
+      <li><strong>{{ t.about.value_3_title }}</strong>{{ t.about.value_3 }}</li>
+      <li><strong>{{ t.about.value_4_title }}</strong>{{ t.about.value_4 }}</li>
     </ul>
   </div>
 </section>

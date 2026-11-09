@@ -66,9 +66,10 @@ To preview the grid without a token, point `INSTAGRAM_FIXTURE` at a saved API an
 
 ## Look and feel
 
-- **Palette of the day:** each day the site takes one of the manual's eight colour series (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche), the same for everyone on that date. Preview one with `?paleta=milpa`. An article or project with its own `serie` keeps it.
-- **Dark mode:** the moon/sun button; it follows the device setting until someone chooses, and remembers the choice.
-- **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette.
+- **Palette of the day:** each day the site takes one of the manual's eight colour series (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche), the same for everyone on that date. Preview one with `?paleta=milpa`. One colour family per page (Manual §04): an article with its own `serie` uses it on its own page only; in lists it takes the palette of the day.
+- **Light by default.** Dark mode only when chosen with the moon/sun button (remembered). It uses only brand colours: Tinta background, Grafito surfaces, Hueso text and each series' dark solid.
+- **Pattern:** P11 Estrella de ocho puntas (`static/img/patron-estrella.svg`), recoloured by the palette. Used as bands and small blocks, never under text, well under 25 % of a page (§06).
+- **Textile logo:** only on the about page hero, on a plain background (§03). Header and footer use the simple monogram.
 - **Home carousel:** the `[[projects]]` in `site.toml`, in order.
 
 ## Run it locally

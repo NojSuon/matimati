@@ -5,12 +5,12 @@
 {%- if a.image %}
 <img src="{{ a.image }}" alt="{{ a.image_alt }}" loading="lazy">
 {%- else %}
-<div class="cover patron" aria-hidden="true"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}><span>MM</span></div>
+<div class="cover" aria-hidden="true"><span>MM</span><i class="patron cover__strip"></i></div>
 {%- endif %}
 {%- endmacro %}
 
 {% macro feature(a, t) -%}
-<article class="feature" data-tags="{{ a.tags | join('|') }}"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}>
+<article class="feature" data-tags="{{ a.tags | join('|') }}">
   <div class="feature__media">{{ media(a) }}</div>
   {%- if a.tags %}<span class="kicker">{{ a.tags | join(' · ') }}</span>{% endif %}
   <h3><a href="{{ a.href }}">{{ a.title }}</a></h3>
@@ -20,7 +20,7 @@
 {%- endmacro %}
 
 {% macro headline(a, t) -%}
-<article class="headline" data-tags="{{ a.tags | join('|') }}"{% if a.serie %} data-serie="{{ a.serie }}"{% endif %}>
+<article class="headline" data-tags="{{ a.tags | join('|') }}">
   <div>
     {%- if a.tags %}<span class="kicker">{{ a.tags | join(' · ') }}</span>{% endif %}
     <h3><a href="{{ a.href }}">{{ a.title }}</a></h3>
@@ -32,7 +32,7 @@
 {%- endmacro %}
 
 {% macro project_card(p, t) -%}
-<article class="project-card"{% if p.serie %} data-serie="{{ p.serie }}"{% endif %}>
+<article class="project-card">
   {%- if p.tag %}<span class="tag">{{ p.tag }}</span>{% endif %}
   <h3><a href="{{ p.url }}"{% if p.external %} target="_blank" rel="noopener"{% endif %}>{{ p.name }}{% if p.external %}<span class="visually-hidden"> {{ t.common.new_tab }}</span>{% endif %}</a></h3>
   <p>{{ p.description }}</p>
@@ -40,7 +40,7 @@
 </article>
 {%- endmacro %}
 
-{% macro page_hero(tag, title, lead) -%}
+{% macro page_hero(tag, title, lead, logo=none) -%}
 <section class="page-hero">
   <div class="wrap">
     <div class="page-hero__text">
@@ -48,7 +48,11 @@
       <h1>{{ title }}</h1>
       {%- if lead %}<p class="lead">{{ lead }}</p>{% endif %}
     </div>
+    {%- if logo %}
+    <img class="page-hero__logo" src="{{ logo.src }}" alt="{{ logo.alt }}" width="300" height="300">
+    {%- else %}
     <div class="page-hero__art patron" aria-hidden="true"></div>
+    {%- endif %}
   </div>
 </section>
 {%- endmacro %}

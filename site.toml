@@ -31,7 +31,8 @@ slot = ""
 # Each one links to its own site (url) or to a page of this site (page).
 # tool = true also lists it on the tools page. serie: a fixed colour series
 # (mati, mar, milpa, jacaranda, fiesta, anil, barro, noche); left out, the
-# slide takes the palette of the day. art: phone, magazine, verbs, heart.
+# slide takes the palette of the day. art: phone, magazine, verbs, board,
+# chinampa, heart.
 
 [[projects]]
 id = "revista"
@@ -81,6 +82,54 @@ tag = "工具"
 description = "选择一种语言，输入一个动词，看看它如何随人称和时态变化。"
 button = "打开变位工具"
 url = "https://nojsuon.github.io/coniugatio/zh/"
+
+[[projects]]
+id = "buul"
+url = "https://nojsuon.github.io/buul/"
+art = "board"
+tool = true
+
+[projects.text.es]
+name = "Buul"
+tag = "Juego"
+description = "El juego de mesa tradicional maya: lanza granos de maíz como dados y juega contra bots o con tus amistades en línea."
+button = "Juega Buul"
+
+[projects.text.en]
+name = "Buul"
+tag = "Game"
+description = "The traditional Maya board game: throw corn kernels as dice and play against bots or with friends online."
+button = "Play Buul"
+
+[projects.text.zh]
+name = "Buul"
+tag = "游戏"
+description = "传统玛雅棋盘游戏：把玉米粒当作骰子，和机器人或朋友在线对战。提供英语和西班牙语界面。"
+button = "玩 Buul"
+
+[[projects]]
+id = "chinamitl"
+url = "https://nojsuon.github.io/chinamitl/"
+art = "chinampa"
+tool = true
+
+[projects.text.es]
+name = "Chinamitl"
+tag = "Explorador 3D"
+description = "Recorre en 3D una chinampa, capa por capa, y descubre cómo miles de ellas formaron Mexiko-Tenochtitlan, con sus nombres en náhuatl."
+button = "Explora la chinampa"
+
+[projects.text.en]
+name = "Chinamitl"
+tag = "3D explorer"
+description = "Explore a chinampa in 3D, layer by layer, and see how thousands of them formed Mexiko-Tenochtitlan, with their names in Nahuatl."
+button = "Explore the chinampa"
+
+[projects.text.zh]
+name = "Chinamitl"
+tag = "3D 探索"
+description = "以 3D 方式逐层探索一块奇南帕（湖上园田），看看成千上万块奇南帕如何构成墨西卡-特诺奇蒂特兰，并附有纳瓦特尔语名称。"
+button = "探索奇南帕"
 
 [[projects]]
 id = "instagram"

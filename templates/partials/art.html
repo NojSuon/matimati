@@ -62,6 +62,49 @@
   <rect class="art-accent" x="{{ 86 + [34, 26, 42][row] + [70, 86, 60][row] + 8 }}" y="{{ y + 18 }}" width="{{ [26, 20, 30][row] }}" height="14" rx="7"/>
   <rect class="art-soft" x="252" y="{{ y + 19 }}" width="60" height="12" rx="6"/>
   {%- endfor %}
+{%- elif art == "board" %}
+  {#- Buul: a race board and four corn kernels used as dice, burnt on one side. #}
+  <g transform="rotate(-6 200 120)">
+    <rect class="art-ink" x="46" y="68" width="308" height="96" rx="16" transform="translate(7 7)"/>
+    <rect class="art-paper art-line" x="46" y="68" width="308" height="96" rx="16"/>
+    {%- for i in range(9) %}
+    <rect class="{{ 'art-bg' if i % 2 == 0 else 'art-soft' }} art-line" x="{{ 58 + i * 32 }}" y="96" width="28" height="40" rx="6"/>
+    {%- endfor %}
+    <circle class="art-solid art-line" cx="136" cy="116" r="11"/>
+    <circle class="art-accent art-line" cx="264" cy="116" r="11"/>
+    <path class="art-line art-nofill" d="M74 82h252" stroke-dasharray="2 10"/>
+  </g>
+  {%- for k in [[96, 236, -20, 1], [168, 270, 15, 0], [244, 232, 40, 1], [314, 276, -35, 0]] %}
+  <g transform="translate({{ k[0] }} {{ k[1] }}) rotate({{ k[2] }})">
+    <path class="art-ink" d="M0-30c19 0 24 26 16 44-5 12-27 12-32 0-8-18-3-44 16-44z" transform="translate(4 4)"/>
+    <path class="{{ 'art-burnt' if k[3] else 'art-corn' }} art-line" d="M0-30c19 0 24 26 16 44-5 12-27 12-32 0-8-18-3-44 16-44z"/>
+    <path class="art-line art-nofill" d="M0-18v20" style="stroke: {{ 'var(--mati-papel)' if k[3] else 'var(--mati-tinta)' }}"/>
+  </g>
+  {%- endfor %}
+{%- elif art == "chinampa" %}
+  {#- Chinamitl: a chinampa with ahuejote trees and milpa, on the lake, with a canoe. #}
+  <rect class="art-bg art-line" x="14" y="214" width="372" height="118" rx="18"/>
+  {%- for y in [238, 268, 298] %}
+  <path class="art-water" d="M{{ 30 if y != 268 else 52 }} {{ y }}c12-8 24-8 36 0s24 8 36 0"/>
+  <path class="art-water" d="M{{ 270 if y != 268 else 300 }} {{ y + 6 }}c12-8 24-8 36 0s24 8 36 0"/>
+  {%- endfor %}
+  <path class="art-ink" d="M96 196h208l-20 64H76z" transform="translate(6 6)"/>
+  <path class="art-solid art-line" d="M96 196h208l-20 64H76z"/>
+  <path class="art-line art-nofill" d="M88 218h206M81 240h206" style="stroke: var(--mati-papel); stroke-width: 2.5"/>
+  {%- for x in [92, 128, 164, 200, 236, 272] %}
+  <path class="art-line" d="M{{ x - 6 }} 262v14"/>
+  {%- endfor %}
+  <path class="art-bg art-line" d="M104 182h192l8 14H96z"/>
+  {%- for t in [[112, 0], [288, 1]] %}
+  <path class="art-line" d="M{{ t[0] }} 186V112"/>
+  <ellipse class="{{ 'art-solid' if t[1] else 'art-soft' }} art-line" cx="{{ t[0] }}" cy="98" rx="16" ry="58"/>
+  {%- endfor %}
+  {%- for x in [160, 192, 224, 256] %}
+  <path class="art-line art-nofill" d="M{{ x }} 184v-58m0 22-14-12m14 30 14-12m-14-16 12-10" style="stroke-width: 3.5"/>
+  <ellipse class="art-accent art-line" cx="{{ x + 7 }}" cy="152" rx="5" ry="10"/>
+  {%- endfor %}
+  <path class="art-paper art-line" d="M40 300h86c-6 14-18 20-38 20H60c-12 0-18-8-20-20z"/>
+  <path class="art-line" d="M108 288l-30 44"/>
 {%- else %}
   <path class="art-ink" d="M200 312s-118-64-118-150c0-46 34-74 70-74 22 0 40 12 48 30 8-18 26-30 48-30 36 0 70 28 70 74 0 86-118 150-118 150z" transform="translate(7 7)"/>
   <path class="art-solid art-line" d="M200 312s-118-64-118-150c0-46 34-74 70-74 22 0 40 12 48 30 8-18 26-30 48-30 36 0 70 28 70 74 0 86-118 150-118 150z"/>

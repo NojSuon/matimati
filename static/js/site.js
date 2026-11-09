@@ -16,7 +16,7 @@ function showTheme() {
     toggle.setAttribute("aria-label", label);
     toggle.title = label;
   }
-  metaTheme?.setAttribute("content", dark ? "#1E1512" : "#FFF9F5");
+  metaTheme?.setAttribute("content", dark ? "#2B1D1A" : "#FFF9F5");
 }
 toggle?.addEventListener("click", () => {
   root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
@@ -27,17 +27,7 @@ toggle?.addEventListener("click", () => {
   }
   showTheme();
 });
-// Follow the system while the person hasn't chosen.
-matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", (e) => {
-  let saved = null;
-  try {
-    saved = localStorage.getItem(STORE);
-  } catch {}
-  if (!saved) {
-    root.dataset.theme = e.matches ? "dark" : "light";
-    showTheme();
-  }
-});
+// Light is the default; dark only when chosen with the button.
 showTheme();
 
 // ---------- Palette of the day (footer label) ----------

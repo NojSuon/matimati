@@ -6,13 +6,13 @@
 <section class="section">
   <div class="wrap two-cols">
     {%- if site.email %}
-    <div class="box" data-serie="anil">
+    <div class="box">
       <h2>{{ t.contact.email_title }}</h2>
       <p>{{ t.contact.email_text }}</p>
       <a class="button" href="mailto:{{ site.email }}?subject={{ t.contact.email_subject | urlencode }}">{{ site.email }}</a>
     </div>
     {%- endif %}
-    <div class="box" data-serie="jacaranda">
+    <div class="box">
       <h2>{{ t.contact.instagram_title }}</h2>
       <p>{{ t.contact.instagram_text }}</p>
       <a class="button" href="{{ links.instagram }}" target="_blank" rel="noopener">@{{ site.instagram }}<span class="visually-hidden"> {{ t.common.new_tab }}</span></a>

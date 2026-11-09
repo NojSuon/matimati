@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {#- Before anything paints: the palette of the day (one of the manual's eight
       series, the same for everyone on a given date; ?paleta=milpa to preview
-      one) and the light/dark theme (saved choice, else the system's). #}
+      one) and the theme: light by default, dark only if the person chose it. #}
   <script>
     (function () {
       var d = document.documentElement, s = {{ series | tojson }};
       var q = new URLSearchParams(location.search).get("paleta");
       var n = new Date(), day = Math.floor(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()) / 864e5);
       d.setAttribute("data-serie", s.indexOf(q) >= 0 ? q : s[day % s.length]);
-      var t = null;
-      try { t = localStorage.getItem("mati-tema"); } catch (e) {}
-      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      var t = "light";
+      try { if (localStorage.getItem("mati-tema") === "dark") t = "dark"; } catch (e) {}
       d.setAttribute("data-theme", t);
     })();
   </script>

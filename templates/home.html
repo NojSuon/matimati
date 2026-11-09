@@ -10,7 +10,7 @@
          data-label-pause="{{ t.carousel.pause }}" data-label-play="{{ t.carousel.play }}">
   <div class="carousel__viewport" data-viewport tabindex="0">
     {%- for p in projects %}
-    <article class="slide" aria-roledescription="slide" aria-label="{{ t.carousel.slide | replace('{n}', loop.index) | replace('{total}', projects | length) }}"{% if p.serie %} data-serie="{{ p.serie }}"{% endif %}>
+    <article class="slide" aria-roledescription="slide" aria-label="{{ t.carousel.slide | replace('{n}', loop.index) | replace('{total}', projects | length) }}">
       <div class="slide__text">
         <span class="tag">{{ p.tag }}</span>
         <h2>{{ p.name }}</h2>
@@ -20,7 +20,8 @@
           <a class="button button--line" href="{{ links.about }}">{{ t.home.about_button }}</a>
         </div>
       </div>
-      <div class="slide__art patron">
+      <div class="slide__art">
+        <div class="patron slide__strip" aria-hidden="true"></div>
         {%- with art = p.art %}{% include "partials/art.html" %}{% endwith %}
       </div>
     </article>
@@ -85,7 +86,7 @@
           {%- if post.image %}
           <img src="{{ post.image }}" alt="{{ post.caption or t.instagram.image_alt }}" loading="lazy" width="400" height="400">
           {%- else %}
-          <div class="cover patron" aria-hidden="true"><span>@</span></div>
+          <div class="cover" aria-hidden="true"><span>@</span><i class="patron cover__strip"></i></div>
           {%- endif %}
           {%- if post.kind != "image" %}<span class="ig-post__kind">{{ t.instagram[post.kind] }}</span>{% endif %}
           <span class="ig-post__text">
@@ -98,7 +99,7 @@
       {%- endfor %}
     </ul>
     {%- else %}
-    <div class="ig-empty patron">
+    <div class="ig-empty">
       <p class="box box--plain">{{ t.instagram.empty }}</p>
     </div>
     {%- endif %}
