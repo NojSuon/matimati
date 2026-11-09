@@ -57,7 +57,7 @@ Every day at 6:00 (Mexico City) the site rebuilds and pulls the latest 6 posts f
 
 1. The Instagram account must be **professional** (Business or Creator): in the app, Settings → Account type and tools.
 2. At https://developers.facebook.com create an app with the use case **Manage messaging & content on Instagram**, connect a business portfolio, and under **API setup with Unified login** create a configuration (any redirect URL, e.g. this site's address). In **2. Generate access tokens**, add @matidemati (it needs the *Instagram Tester* role under App roles → Roles while the app is unpublished) and generate a token.
-3. In this repository: **Settings → Secrets and variables → Actions → New repository secret**, name , value: the token. Both kinds work:  tokens (Instagram Login, refreshed on every build) and  system-user tokens (never expire). With an  token, if the build log says it couldn't find the account, also add a repository **variable** (Variables tab)  with the account's number from the Meta dashboard.
+3. In this repository: **Settings → Secrets and variables → Actions → New repository secret**, name `INSTAGRAM_TOKEN`, value: the token. Both kinds work: `IG…` tokens (Instagram Login, refreshed on every build) and `EAA…` system-user tokens (never expire). With an `EAA…` token, if the build log says it couldn't find the account, also add a repository **variable** (Variables tab) `INSTAGRAM_USER_ID` with the account's number from the Meta dashboard.
 4. Run the workflow once (Actions → Deploy to GitHub Pages → Run workflow).
 
 Each build also refreshes the token's 60-day validity, so as long as the site rebuilds daily it keeps working. If the API fails, the build doesn't: the home page falls back to `content/instagram.toml`.
