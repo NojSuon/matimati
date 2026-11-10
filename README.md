@@ -53,7 +53,7 @@ Words in indigenous languages should be checked with speakers before publishing 
 
 ## Instagram, automatically
 
-Every day at 6:00 (Mexico City) the site rebuilds and pulls the latest 6 posts from @matidemati through the official Instagram API. Images are copied into the site, so they keep working. One-time setup:
+Every 3 hours the site rebuilds and pulls the latest 6 posts from @matidemati through the official Instagram API. Images are copied into the site, so they keep working. One-time setup:
 
 1. The Instagram account must be **professional** (Business or Creator): in the app, Settings → Account type and tools.
 2. At https://developers.facebook.com create an app with the use case **Manage messaging & content on Instagram**, connect a business portfolio, and under **API setup with Unified login** create a configuration (any redirect URL, e.g. this site's address). In **2. Generate access tokens**, add @matidemati (it needs the *Instagram Tester* role under App roles → Roles while the app is unpublished) and generate a token.

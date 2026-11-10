@@ -1,5 +1,7 @@
 # Builds the site (Rust → static files) and publishes it to GitHub Pages on
-# every push to main, and once a day so new Instagram posts appear on their own.
+# every push to main, and every 3 hours so new Instagram posts appear on their
+# own. (GitHub can delay scheduled runs by hours, so a single daily run could
+# miss a whole day; an off-hour minute is delayed less than :00.)
 #
 # Instagram: add the repository secret INSTAGRAM_TOKEN (Settings → Secrets and
 # variables → Actions). Without it, the home page uses content/instagram.toml.
@@ -13,7 +15,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "0 12 * * *" # every day, 6:00 in Mexico City
+    - cron: "17 */3 * * *" # every 3 hours, at minute 17 (UTC)
 
 permissions:
   contents: read
