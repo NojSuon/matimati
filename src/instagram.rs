@@ -156,11 +156,38 @@ fn to_post(m: Media, image: Option<String>) -> Post {
     });
     Post {
         caption: short_caption(m.caption.as_deref().unwrap_or("")),
-        date: m.timestamp.get(..10).map(str::to_string),
+        date: local_date(&m.timestamp),
         kind: kind(&m.media_type).into(),
         url: m.permalink,
         image,
     }
+}
+
+/// Hours from UTC to Mexico City (no daylight saving since 2022).
+const MEXICO_CITY_OFFSET_HOURS: i64 = -6;
+
+/// "2026-11-10T01:30:00+0000" (UTC, as Instagram sends it) → the date in
+/// Mexico City, "2026-11-09", so an evening post isn't dated tomorrow.
+fn local_date(timestamp: &str) -> Option<String> {
+    let num = |r: std::ops::Range<usize>| timestamp.get(r)?.parse::<i64>().ok();
+    let (y, m, d, h) = (num(0..4)?, num(5..7)?, num(8..10)?, num(11..13).unwrap_or(0));
+    // Days since 1970-01-01 (H. Hinnant's days_from_civil) and back.
+    let y2 = if m <= 2 { y - 1 } else { y };
+    let era = y2.div_euclid(400);
+    let yoe = y2 - era * 400;
+    let doy = (153 * ((m + 9) % 12) + 2) / 5 + d - 1;
+    let days = era * 146_097 + yoe * 365 + yoe / 4 - yoe / 100 + doy - 719_468;
+    let local = days + (h + MEXICO_CITY_OFFSET_HOURS).div_euclid(24);
+    let z = local + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z - era * 146_097;
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = yoe + era * 400 + if month <= 2 { 1 } else { 0 };
+    Some(format!("{year:04}-{month:02}-{day:02}"))
 }
 
 /// First line of the caption, without trailing hashtags, at most ~140 chars.
@@ -326,6 +353,14 @@ mod tests {
         assert_eq!(posts[0].date.as_deref(), Some("2026-11-07"));
         assert_eq!(posts[1].kind, "video");
         assert_eq!(posts[1].image.as_deref(), Some("https://x/t.jpg"));
+    }
+
+    #[test]
+    fn dates_in_mexico_city() {
+        assert_eq!(local_date("2026-11-10T01:30:00+0000").as_deref(), Some("2026-11-09"));
+        assert_eq!(local_date("2026-11-10T06:00:00+0000").as_deref(), Some("2026-11-10"));
+        assert_eq!(local_date("2027-01-01T03:00:00+0000").as_deref(), Some("2026-12-31"));
+        assert_eq!(local_date("2028-03-01T02:00:00+0000").as_deref(), Some("2028-02-29"));
     }
 
     #[test]
